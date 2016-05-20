@@ -151,96 +151,26 @@
 
                 var target = document.getElementById(item.m.o);
 
-                var soloUna = true;
-
                 if (target) {
                     data.observer = data.observer || {};
                     data.observer[item.w.p[0]] = new MutationObserver(function (mutations) {
-                        mutations.forEach(function (mutation) {
-
-                            if(/^(m)$/.test(item.w.p[0])) {
-
-                                console.log(item.w.p[0], mutation);
-                                console.log(item.w.p[0], window.performance.now());
-
-                                for(var i=0,l=mutation.addedNodes.length; i<l;i++) {
-
-                                    var node = mutation.addedNodes[i];
-
-                                    for(var ii= 0, ll=node.childNodes.length; ii<ll;ii++) {
-
-
-                                        var child = node.childNodes[ii];
-
-
-
-
-
-
-
-                                        if("IFRAME" == child.tagName && soloUna) {
-
-
-                                            var nuevaMutacion = new MutationObserver(observarIframe);
-
-
-                                            console.log(child.contentDocument.body.childNodes);
-
-                                            //for(var key in child.) {
-
-                                                //nuevaMutacion.observe(child.contentDocument.body, {attributes: true, childList: true, characterData: true, subtree: true});
-                                            //}
-
-
-
-
-                                            soloUna = false;
-                                        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                    }
-
-                                }
-                            }
-
-                            if(!data.slots[item.w.p[0]].offset2) {
-                                data.slots[item.w.p[0]].offset2 = window.performance.now();
-                            }
-
-                            if(mutation.type == "attributes") {
-                                data.slots[item.w.p[0]].offset = window.performance.now();
-                            }
-                        });
-
-                        function observarIframe (mutations) {
                             mutations.forEach(function (mutation) {
 
-                                console.log("\n\n\n\n");
-                                console.log("--------------------------------------------------");
-                                console.log("IFRAME!!!!!", window.performance.now(), mutation);
-                                console.log("--------------------------------------------------");
-                                console.log("\n\n\n\n");
+                                if(/^(m|r)$/.test(item.w.p[0])) {
+                                    console.log(item.w.p[0], mutation);
+                                    console.log(item.w.p[0], window.performance.now());
+                                }
 
+
+                                if(!data.slots[item.w.p[0]].offset2) {
+                                    data.slots[item.w.p[0]].offset2 = window.performance.now();
+                                }
+
+                                if(mutation.type == "attributes") {
+                                    data.slots[item.w.p[0]].offset = window.performance.now();
+                                }
                             });
-                        }
-
-                    });
+                        });
                     var config = {attributes: true, childList: true, characterData: true, subtree: true};
                     data.observer[item.w.p[0]].observe(target, config);
                 }
@@ -251,59 +181,59 @@
 
 
         /*window["googletag"].on("gpt-google_js_loaded", function (e, level, message, service, slot) {
-         console.log("google_js_loaded",e, level, message, service, slot);
-         });
-         window["googletag"].on("gpt-gpt_fetch", function (e, level, message, service, slot) {
-         console.log("gpt_fetch",e, level, message, service, slot);
-         });
-         window["googletag"].on("gpt-gpt_fetched", function (e, level, message, service, slot) {
-         console.log("gpt_fetched",e, level, message, service, slot);
-         });
-         window["googletag"].on("gpt-page_load_complete", function (e, level, message, service, slot) {
-         console.log("page_load_complete",e, level, message, service, slot);
-         });
-         window["googletag"].on("gpt-queue_start", function (e, level, message, service, slot) {
-         console.log("queue_start",e, level, message, service, slot);
-         });
-         window["googletag"].on("gpt-service_add_slot", function (e, level, message, service, slot) {
-         console.log("service_add_slot",e, level, message, service, slot);
-         });
-         window["googletag"].on("gpt-service_add_targeting", function (e, level, message, service, slot) {
-         console.log("service_add_targeting",e, level, message, service, slot);
-         });
-         window["googletag"].on("gpt-service_collapse_containers_enable", function (e, level, message, service, slot) {
-         console.log("service_collapse_containers_enable",e, level, message, service, slot);
-         });
-         window["googletag"].on("gpt-service_create", function (e, level, message, service, slot) {
-         console.log("service_create",e, level, message, service, slot);
-         });
-         window["googletag"].on("gpt-service_single_request_mode_enable", function (e, level, message, service, slot) {
-         console.log("service_single_request_mode_enable",e, level, message, service, slot);
-         });
-         window["googletag"].on("gpt-slot_create", function (e, level, message, service, slot) {
-         console.log("slot_create",e, level, message, service, slot);
-         });
-         window["googletag"].on("gpt-slot_add_targeting", function (e, level, message, service, slot) {
-         console.log("slot_add_targeting",e, level, message, service, slot);
-         });
-         window["googletag"].on("gpt-slot_fill", function (e, level, message, service, slot) {
-         console.log("slot_fill",e, level, message, service, slot);
-         });
-         window["googletag"].on("gpt-slot_fetch", function (e, level, message, service, slot) {
-         console.log("slot_fetch",e, level, message, service, slot);
-         });
-         window["googletag"].on("gpt-slot_receiving", function (e, level, message, service, slot) {
-         console.log("slot_receiving",e, level, message, service, slot);
-         });
-         window["googletag"].on("gpt-slot_render_delay", function (e, level, message, service, slot) {
-         console.log("slot_render_delay",e, level, message, service, slot);
-         });
-         window["googletag"].on("gpt-slot_rendering", function (e, level, message, service, slot) {
-         console.log("slot_rendering",e, level, message, service, slot);
-         });
-         window["googletag"].on("gpt-slot_rendered", function (e, level, message, service, slot) {
-         console.log("slot_rendered",e, level, message, service, slot);
-         });*/
+            console.log("google_js_loaded",e, level, message, service, slot);
+        });
+        window["googletag"].on("gpt-gpt_fetch", function (e, level, message, service, slot) {
+            console.log("gpt_fetch",e, level, message, service, slot);
+        });
+        window["googletag"].on("gpt-gpt_fetched", function (e, level, message, service, slot) {
+            console.log("gpt_fetched",e, level, message, service, slot);
+        });
+        window["googletag"].on("gpt-page_load_complete", function (e, level, message, service, slot) {
+            console.log("page_load_complete",e, level, message, service, slot);
+        });
+        window["googletag"].on("gpt-queue_start", function (e, level, message, service, slot) {
+            console.log("queue_start",e, level, message, service, slot);
+        });
+        window["googletag"].on("gpt-service_add_slot", function (e, level, message, service, slot) {
+            console.log("service_add_slot",e, level, message, service, slot);
+        });
+        window["googletag"].on("gpt-service_add_targeting", function (e, level, message, service, slot) {
+            console.log("service_add_targeting",e, level, message, service, slot);
+        });
+        window["googletag"].on("gpt-service_collapse_containers_enable", function (e, level, message, service, slot) {
+            console.log("service_collapse_containers_enable",e, level, message, service, slot);
+        });
+        window["googletag"].on("gpt-service_create", function (e, level, message, service, slot) {
+            console.log("service_create",e, level, message, service, slot);
+        });
+        window["googletag"].on("gpt-service_single_request_mode_enable", function (e, level, message, service, slot) {
+            console.log("service_single_request_mode_enable",e, level, message, service, slot);
+        });
+        window["googletag"].on("gpt-slot_create", function (e, level, message, service, slot) {
+            console.log("slot_create",e, level, message, service, slot);
+        });
+        window["googletag"].on("gpt-slot_add_targeting", function (e, level, message, service, slot) {
+            console.log("slot_add_targeting",e, level, message, service, slot);
+        });
+        window["googletag"].on("gpt-slot_fill", function (e, level, message, service, slot) {
+            console.log("slot_fill",e, level, message, service, slot);
+        });
+        window["googletag"].on("gpt-slot_fetch", function (e, level, message, service, slot) {
+            console.log("slot_fetch",e, level, message, service, slot);
+        });
+        window["googletag"].on("gpt-slot_receiving", function (e, level, message, service, slot) {
+            console.log("slot_receiving",e, level, message, service, slot);
+        });
+        window["googletag"].on("gpt-slot_render_delay", function (e, level, message, service, slot) {
+            console.log("slot_render_delay",e, level, message, service, slot);
+        });
+        window["googletag"].on("gpt-slot_rendering", function (e, level, message, service, slot) {
+            console.log("slot_rendering",e, level, message, service, slot);
+        });
+        window["googletag"].on("gpt-slot_rendered", function (e, level, message, service, slot) {
+            console.log("slot_rendered",e, level, message, service, slot);
+        });*/
 
         window["googletag"].on("gpt-service_add_slot", function (e, level, message, service, slot) {
             mutationDFP(slot);

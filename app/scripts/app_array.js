@@ -1,12 +1,28 @@
 
-(function() {
+//(function(window) {
 
-    'use strict';
+'use strict';
 
-    window["googletag"] = window["googletag"] || {};
-    window["googletag"].cmd = window["googletag"].cmd || [];
+var flagPush = true;
+var regArr = Array.prototype.push;
+Array.prototype.push = function(e) {
 
-    window["googletag"].cmd.push(function () {
+    if(!e) return;
+
+    if (flagPush && window["googletag"] && this == window["googletag"].cmd) {
+        flagPush = false;
+        dfpc_push();
+    }
+
+    if (window["googletag"] && this == window["googletag"].cmd) {
+        console.dir(e);
+    }
+    return regArr.call(this,e);
+};
+
+function dfpc_push() {
+
+    regArr.apply(window["googletag"].cmd, function () {
 
         var DFPConsole = DFPConsole || {slots: {}};
 
@@ -23,27 +39,26 @@
                     "match": match
                 });
             };
-        addEvent("gpt-google_js_loaded",                    8, /Google service JS loaded/ig);
-        addEvent("gpt-gpt_fetch",                           46, /Fetching GPT implementation/ig);
-        addEvent("gpt-gpt_fetched",                         48, /GPT implementation fetched\./ig);
-        addEvent("gpt-page_load_complete",                  1, /Page load complete/ig);
-        addEvent("gpt-queue_start",                         31, /^Invoked queued function/ig);
+        addEvent("gpt-google_js_loaded", 8, /Google service JS loaded/ig);
+        addEvent("gpt-gpt_fetch", 46, /Fetching GPT implementation/ig);
+        addEvent("gpt-gpt_fetched", 48, /GPT implementation fetched\./ig);
+        addEvent("gpt-page_load_complete", 1, /Page load complete/ig);
+        addEvent("gpt-queue_start", 31, /^Invoked queued function/ig);
 
-        addEvent("gpt-service_add_slot",                    40, /Associated ([\w]*) service with slot ([\/\w]*)/ig);
-        addEvent("gpt-service_add_targeting",               88, /Setting targeting attribute ([\w]*) with value ([\w\W]*) for service ([\w]*)/ig);
-        addEvent("gpt-service_collapse_containers_enable",  78, /Enabling collapsing of containers when there is no ad content/ig);
-        addEvent("gpt-service_create",                      35, /Created service: ([\w]*)/ig);
-        addEvent("gpt-service_single_request_mode_enable",  63, /Using single request mode to fetch ads/ig);
+        addEvent("gpt-service_add_slot", 40, /Associated ([\w]*) service with slot ([\/\w]*)/ig);
+        addEvent("gpt-service_add_targeting", 88, /Setting targeting attribute ([\w]*) with value ([\w\W]*) for service ([\w]*)/ig);
+        addEvent("gpt-service_collapse_containers_enable", 78, /Enabling collapsing of containers when there is no ad content/ig);
+        addEvent("gpt-service_create", 35, /Created service: ([\w]*)/ig);
+        addEvent("gpt-service_single_request_mode_enable", 63, /Using single request mode to fetch ads/ig);
 
-        addEvent("gpt-slot_create",                         2, /Created slot: ([\/\w]*)/ig);
-        addEvent("gpt-slot_add_targeting",                  17, /Setting targeting attribute ([\w]*) with value ([\w\W]*) for slot ([\/\w]*)/ig);
-        addEvent("gpt-slot_fill",                           50, /Calling fillslot/ig);
-        addEvent("gpt-slot_fetch",                          3, /Fetching ad for slot ([\/\w]*)/ig);
-        addEvent("gpt-slot_receiving",                      4, /Receiving ad for slot ([\/\w]*)/ig);
-        addEvent("gpt-slot_render_delay",                   53, /Delaying rendering of ad slot ([\/\w]*) pending loading of the GPT implementation/ig);
-        addEvent("gpt-slot_rendering",                      5, /^Rendering ad for slot ([\/\w]*)/ig);
-        addEvent("gpt-slot_rendered",                       6, /Completed rendering ad for slot ([\/\w]*)/ig);
-
+        addEvent("gpt-slot_create", 2, /Created slot: ([\/\w]*)/ig);
+        addEvent("gpt-slot_add_targeting", 17, /Setting targeting attribute ([\w]*) with value ([\w\W]*) for slot ([\/\w]*)/ig);
+        addEvent("gpt-slot_fill", 50, /Calling fillslot/ig);
+        addEvent("gpt-slot_fetch", 3, /Fetching ad for slot ([\/\w]*)/ig);
+        addEvent("gpt-slot_receiving", 4, /Receiving ad for slot ([\/\w]*)/ig);
+        addEvent("gpt-slot_render_delay", 53, /Delaying rendering of ad slot ([\/\w]*) pending loading of the GPT implementation/ig);
+        addEvent("gpt-slot_rendering", 5, /^Rendering ad for slot ([\/\w]*)/ig);
+        addEvent("gpt-slot_rendered", 6, /Completed rendering ad for slot ([\/\w]*)/ig);
 
 
         window["googletag"].events = window["googletag"].events || {};
@@ -142,112 +157,37 @@
         }(DFPConsole, window["googletag"], 1), 1700);
 
 
+        var mutationDFP = (function (data) {
 
-
-
-        var mutationDFP = (function(data) {
-
-            return function(item) {
+            return function (item) {
 
                 var target = document.getElementById(item.m.o);
-
-                var soloUna = true;
 
                 if (target) {
                     data.observer = data.observer || {};
                     data.observer[item.w.p[0]] = new MutationObserver(function (mutations) {
                         mutations.forEach(function (mutation) {
 
-                            if(/^(m)$/.test(item.w.p[0])) {
-
+                            if (/^(m|r)$/.test(item.w.p[0])) {
                                 console.log(item.w.p[0], mutation);
                                 console.log(item.w.p[0], window.performance.now());
-
-                                for(var i=0,l=mutation.addedNodes.length; i<l;i++) {
-
-                                    var node = mutation.addedNodes[i];
-
-                                    for(var ii= 0, ll=node.childNodes.length; ii<ll;ii++) {
-
-
-                                        var child = node.childNodes[ii];
-
-
-
-
-
-
-
-                                        if("IFRAME" == child.tagName && soloUna) {
-
-
-                                            var nuevaMutacion = new MutationObserver(observarIframe);
-
-
-                                            console.log(child.contentDocument.body.childNodes);
-
-                                            //for(var key in child.) {
-
-                                                //nuevaMutacion.observe(child.contentDocument.body, {attributes: true, childList: true, characterData: true, subtree: true});
-                                            //}
-
-
-
-
-                                            soloUna = false;
-                                        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                    }
-
-                                }
                             }
 
-                            if(!data.slots[item.w.p[0]].offset2) {
+
+                            if (!data.slots[item.w.p[0]].offset2) {
                                 data.slots[item.w.p[0]].offset2 = window.performance.now();
                             }
 
-                            if(mutation.type == "attributes") {
+                            if (mutation.type == "attributes") {
                                 data.slots[item.w.p[0]].offset = window.performance.now();
                             }
                         });
-
-                        function observarIframe (mutations) {
-                            mutations.forEach(function (mutation) {
-
-                                console.log("\n\n\n\n");
-                                console.log("--------------------------------------------------");
-                                console.log("IFRAME!!!!!", window.performance.now(), mutation);
-                                console.log("--------------------------------------------------");
-                                console.log("\n\n\n\n");
-
-                            });
-                        }
-
                     });
                     var config = {attributes: true, childList: true, characterData: true, subtree: true};
                     data.observer[item.w.p[0]].observe(target, config);
                 }
             }
         }(DFPConsole));
-
-
 
 
         /*window["googletag"].on("gpt-google_js_loaded", function (e, level, message, service, slot) {
@@ -311,7 +251,11 @@
 
         window["googletag"].on("gpt-slot_fetch", function (e, level, message, service, slot) {
             var d = new Date();
-            DFPConsole.slots[slot.w.p[0]] = {'data': slot.m.o, 'google_fetch':d.getTime(), 'fetch': window.performance.now()};
+            DFPConsole.slots[slot.w.p[0]] = {
+                'data': slot.m.o,
+                'google_fetch': d.getTime(),
+                'fetch': window.performance.now()
+            };
         });
         window["googletag"].on("gpt-slot_receiving", function (e, level, message, service, slot) {
             var d = new Date();
@@ -332,6 +276,7 @@
         });
 
         window.addEventListener('load', function (data) {
+
             return function () {
                 var loadData = setInterval(function () {
                     if (data.ready) {
@@ -363,7 +308,7 @@
                 interactive = t.domInteractive - t.navigationStart,
                 load = t.loadEventEnd - t.navigationStart,
                 dcl = t.domContentLoadedEventEnd - t.navigationStart;
-            load = load<0 ? window.performance.now() : load;
+            load = load < 0 ? window.performance.now() : load;
 
 
             window.console.log("\n%cDFP Console\n%c by OSP Team - v0.1.0\n\n",
@@ -372,15 +317,15 @@
 
             for (var key in output.slots) {
 
-                if(!(/^(m|r)$/.test(key)) && output.observer[key]) {
-                    //output.observer[key].disconnect();
+                if (key != "m" && output.observer[key]) {
+                    output.observer[key].disconnect();
                 }
 
                 var offset = output.slots[key].offset;
                 var offset2 = output.slots[key].offset2;
-                var totalFetch = Math.round(output.slots[key].fetch);
-                var totalRendering = Math.round(output.slots[key].rendering);
-                var totalRendered = Math.round(output.slots[key].rendering);
+                var totalFetch = Math.round(output.slots[key].fetch + offset);
+                var totalRendering = Math.round(output.slots[key].rendering + offset);
+                var totalRendered = Math.round(output.slots[key].rendering + offset);
 
                 window.console.groupCollapsed("%cSlot: [" + key + "] [" + output.slots[key].data + "]",
                     "border: 1px solid rgba(0,0,0,0.1);color:#3b7bea;background-color: #f5f5f5;height: 30px; padding: 1px 8px;cursor:pointer;");
@@ -415,7 +360,7 @@
 
             window["DFPConsole"] = DFPConsole;
         };
-
     });
-}());
+}
+//}(window));
 

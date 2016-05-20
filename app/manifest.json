@@ -39,7 +39,7 @@
     {
       "run_at": "document_start",
       "matches": ["http://*/*", "https://*/*"],
-      "all_frames":true,
+      "all_frames":false,
       "js": ["scripts/content.js"]
     }
   ],
