@@ -10,7 +10,6 @@
         (document.head || document.documentElement).appendChild(s);
     }
 
-
 //document.write('\x3Cscript type="text/javascript" src="'+s.src+'">\x3C/script>');
 
 

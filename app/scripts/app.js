@@ -414,6 +414,10 @@
                 "border: 1px solid rgb(255, 204, 52);background-color: rgb(247, 248, 224);padding:1px 8px;");
 
             window["DFPConsole"] = DFPConsole;
+
+
+            //var port = chrome.runtime.connect({name: "dfp-console-port"});
+            //port.postMessage({myProperty: "value"});
         };
 
     });
