@@ -1,34 +1,68 @@
 (function() {
     "use_strict";
 
-    var ports = [];
-    chrome.runtime.onConnect.addListener(function(port) {
-        if (port.name !== "devtools") return;
-        ports.push(port);
-        // Remove port when destroyed (eg when devtools instance is closed)
-
-        port.onDisconnect.addListener(function() {
-            var i = ports.indexOf(port);
-            if (i !== -1) ports.splice(i, 1);
-        });
-
-        port.onMessage.addListener(function(msg) {
-            // Received message from devtools. Do something:
-            console.log('Received message from devtools page', msg);
-        });
-    });
-
-    // Function to send a message to all devtools.html views:
-    function notifyDevtools(msg) {
-        ports.forEach(function(port) {
-            port.postMessage(msg);
-        });
-    }
-
     window.addEventListener('message', function (e) {
         var m = e.data.match(/^dfpStream(.*)/);
-        m && notifyDevtools("hola");
-        //e.data.replace("dfpStream","")
+        m && DFPOutput(e.data.replace("dfpStream",""));
     });
+
+    var DFPOutput = function (output) {
+
+        console.dir(output);
+
+        output = JSON.parse(output);
+
+        window.console.clear();
+
+        var t = window.performance.timing,
+            interactive = t.domInteractive - t.navigationStart,
+            load = t.loadEventEnd - t.navigationStart,
+            dcl = t.domContentLoadedEventEnd - t.navigationStart;
+        load = load<0 ? window.performance.now() : load;
+
+
+        window.console.log("\n%cDFP Console\n%c by OSP Team - v0.1.0\n\n",
+            "font-family: Georgia, serif; font-size: 32px; color: #005689",
+            "font-family: Helvetica Neue, sans-serif; font-size: 11px; text-decoration: underline; line-height: 1.2rem; color: #767676");
+
+        for (var key in output.slots) {
+
+            var totalFetch = Math.round(output.slots[key].fetchStarted);
+            var totalRendering = Math.round(output.slots[key].renderStarted);
+            var totalRendered = Math.round(output.slots[key].rendered);
+
+            window.console.groupCollapsed("%cSlot: [" + key + "] [" + output.slots[key].id + "]",
+                "border: 1px solid rgba(0,0,0,0.1);color:#3b7bea;background-color: #f5f5f5;height: 30px; padding: 1px 8px;cursor:pointer;");
+            window.console.log("%c[" + totalFetch + " ms] %cRecibiendo anuncio.",
+                "font-weight:bold;color:#333; padding: 0 1px",
+                "color: #555;");
+            window.console.log("%c[" + totalRendering + " ms] %cRenderizando anuncio.",
+                "font-weight:bold;color:#333; padding: 0 1px",
+                "color: #555");
+            window.console.log("%c[" + totalRendered + " ms] %cRenderizado de anuncio completado.",
+                "font-weight:bold;color:#333; padding: 0 1px",
+                "color: #555");
+
+            window.console.log("%c" + (output.slots[key].fetchEnded - output.slots[key].fetchStarted).toFixed(2) + " ms to load%c | %c" + (output.slots[key].renderEnded - output.slots[key].renderStarted).toFixed(2) + " ms to render%c | %c" + (output.slots[key].renderEnded - output.slots[key].fetchStarted).toFixed(2) + " ms total",
+                "border:1px solid #E3FFDD; background: #E3FFDD;color:#18A218; padding: 0 4px",
+                "border:none; background: #fff; font-weight:bold;color:#ddd",
+                "border:1px solid #E3FFDD; background: #E3FFDD;color:#18A218; padding: 0 4px",
+                "border:none; background: #fff; font-weight:bold;color:#ddd",
+                "border:1px solid #E3FFDD; background: #E3FFDD;color:#18A218; padding: 0 4px");
+
+            window.console.groupEnd();
+        }
+        window.console.log('\n%cinteractive: ' + (interactive / 1000).toFixed(2) + ' s' +
+            '%c | ' +
+            '%cload: ' + (load / 1000).toFixed(2) + ' s' +
+            '%c | ' +
+            '%cDOMContentLoaded: ' + (dcl / 1000).toFixed(2) + ' s',
+
+            "border: 1px solid rgb(255, 204, 52);background-color: rgb(247, 248, 224);padding:1px 8px;",
+            "border:none; background: #fff; font-weight:bold;color:#ddd",
+            "border: 1px solid rgb(255, 204, 52);background-color: rgb(247, 248, 224);padding:1px 8px;",
+            "border:none; background: #fff; font-weight:bold;color:#ddd",
+            "border: 1px solid rgb(255, 204, 52);background-color: rgb(247, 248, 224);padding:1px 8px;");
+    };
 
 }());
