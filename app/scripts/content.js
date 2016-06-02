@@ -1,46 +1,34 @@
-
 (function() {
-
     "use_strict";
 
-    var s = document.createElement('script');
-    s.src = chrome.extension.getURL('scripts/app.js');
-    s.id = "dfp-consolejs";
-    if (!document.getElementById("dfp-consolejs")) {
-        (document.head || document.documentElement).appendChild(s);
+    var ports = [];
+    chrome.runtime.onConnect.addListener(function(port) {
+        if (port.name !== "devtools") return;
+        ports.push(port);
+        // Remove port when destroyed (eg when devtools instance is closed)
+
+        port.onDisconnect.addListener(function() {
+            var i = ports.indexOf(port);
+            if (i !== -1) ports.splice(i, 1);
+        });
+
+        port.onMessage.addListener(function(msg) {
+            // Received message from devtools. Do something:
+            console.log('Received message from devtools page', msg);
+        });
+    });
+
+    // Function to send a message to all devtools.html views:
+    function notifyDevtools(msg) {
+        ports.forEach(function(port) {
+            port.postMessage(msg);
+        });
     }
 
-//document.write('\x3Cscript type="text/javascript" src="'+s.src+'">\x3C/script>');
+    window.addEventListener('message', function (e) {
+        var m = e.data.match(/^dfpStream(.*)/);
+        m && notifyDevtools("hola");
+        //e.data.replace("dfpStream","")
+    });
 
-
-    /*
-     var gptWatch = setInterval(function() {
-     var maxAttempts = 1000,
-     count=0;
-     return function() {
-     if ("googletag" in window) {
-     window.console.info("DFP load!!!!!!.");
-     clearInterval(gptWatch);
-     }else{
-     if (count>maxAttempts) {
-     window.console.warn("Hubo un error recuperando la publicidad...");
-     window.console.dir(window);
-     clearInterval(gptWatch);
-     }else{
-     window.console.log("DFP loading...");
-     }
-     }
-     count++;
-     }
-     }(),10);
-
-     window.addEventListener("message", function(event) {
-     // We only accept messages from ourselves
-     if (event.source != window)
-     return;
-
-     console.log(event);
-     console.log(event.data.text);
-
-     }, false);*/
 }());
