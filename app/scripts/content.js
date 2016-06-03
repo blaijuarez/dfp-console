@@ -2,7 +2,7 @@
     "use_strict";
 
     window.addEventListener('message', function (e) {
-        var m = e.data.match(/^dfpStream(.*)/);
+        var m = e.data.match ? e.data.match(/^dfpStream(.*)/) : null;
         m && DFPOutput(e.data.replace("dfpStream",""));
     });
 
@@ -21,7 +21,7 @@
         load = load<0 ? window.performance.now() : load;
 
 
-        window.console.log("\n%cDFP Console\n%c by OSP Team - v0.1.0\n\n",
+        window.console.log("\n%cDFP Console\n%c by OSP Team - v0.1.1\n\n",
             "font-family: Georgia, serif; font-size: 32px; color: #005689",
             "font-family: Helvetica Neue, sans-serif; font-size: 11px; text-decoration: underline; line-height: 1.2rem; color: #767676");
 
@@ -32,14 +32,15 @@
             var totalRendered = Math.round(output.slots[key].rendered);
 
             window.console.groupCollapsed("%cSlot: [" + key + "] [" + output.slots[key].id + "]",
-                "border: 1px solid rgba(0,0,0,0.1);color:#3b7bea;background-color: #f5f5f5;height: 30px; padding: 1px 8px;cursor:pointer;");
+                "border: 1px solid rgba(0,0,0,0.1);color:"+ (!!totalRendered ? '#3b7bea' : '#c9c9c9') +";background-color: #f5f5f5;height: 30px; padding: 1px 8px;cursor:pointer;");
+
             window.console.log("%c[" + totalFetch + " ms] %cRecibiendo anuncio.",
                 "font-weight:bold;color:#333; padding: 0 1px",
                 "color: #555;");
             window.console.log("%c[" + totalRendering + " ms] %cRenderizando anuncio.",
                 "font-weight:bold;color:#333; padding: 0 1px",
                 "color: #555");
-            window.console.log("%c[" + totalRendered + " ms] %cRenderizado de anuncio completado.",
+            window.console.log("%c[" + (!!totalRendered ? totalRendered : output.slots[key].renderEnded) + " ms] %cRenderizado de anuncio completado.",
                 "font-weight:bold;color:#333; padding: 0 1px",
                 "color: #555");
 

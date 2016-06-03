@@ -3,7 +3,8 @@
     var window = this, document = this.document;
 
     window.DFPConsole = {"slots":{},"startTime":performance.now()};
-    var k, n = this, r = function (a) {
+    var loadDFPConsole = setInterval(function() {console.info("Cargando DFP Console...")},1000),
+        k, n = this, r = function (a) {
         return void 0 !== a
     }, aa = function () {
     }, ba = function (a) {
@@ -1011,6 +1012,9 @@
     var Be = Object.prototype.hasOwnProperty, Ce = function (a, b) {
         for (var c in a)Be.call(a, c) && b.call(void 0, a[c], c, a)
     }, Ee = function () {
+
+        forceDFPConsoleLuncher();
+
         var a = De();
         "google_onload_fired" in a || (a.google_onload_fired = !1, nd(a, "load", function () {
 
@@ -6718,6 +6722,9 @@
 
     DFPConsoleLog = function (action,slot) {
         if(action==="finish") {
+
+            loadDFPConsole && clearInterval(loadDFPConsole);
+
             window.DFPConsole["ready"]=true;
             window.DFPConsole["endTime"]=performance.now();
 
@@ -6732,6 +6739,24 @@
         if(!(idSlot in window.DFPConsole.slots)) window.DFPConsole.slots[idSlot]={};
         window.DFPConsole.slots[idSlot]["id"] = slot.m.o;
         window.DFPConsole.slots[idSlot][action] = window.performance.now();
+    },
+
+
+    forceDFPConsoleLuncher = function() {
+
+        setTimeout(function() {
+
+            loadDFPConsole && clearInterval(loadDFPConsole);
+
+            if(!window.DFPConsole["ready"]) {
+                var r = confirm("Tenemos problemas para capturar los datos de DFP. ¿Quieres forzar la consola?");
+                if (r == true) {
+                    DFPConsoleLog("finish");
+                }
+            }
+
+        },10000);
+
     };
 
     "complete" === document.readyState ? zm() : la(window, zm);
