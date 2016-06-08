@@ -17,8 +17,13 @@
         return output;
     };
 
-    var DFPOutput = function (output) {
+    window.onload = function () {
+        setTimeout(function(){
+            window.postMessage("dfpForceConsole", "*");
+        },5000);
+    };
 
+    var DFPOutput = function (output) {
         var t = window.performance.timing,
             interactive = t.domInteractive - t.navigationStart,
             load = t.loadEventEnd - t.navigationStart,
