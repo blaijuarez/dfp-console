@@ -6736,12 +6736,17 @@
 
     window.addEventListener('message', function (e) {
         var m = e.data.match ? e.data.match(/^dfpForceConsole(.*)/) : null;
+        var f = e.data.match ? e.data.match(/^dfpFinishParse(.*)/) : null;
         if(m && !window.DFPConsole["ready"]) {
             var r = confirm("Tenemos problemas para capturar los datos de DFP. Quieres forzar la consola?");
             if (r == true) {
                 DFPConsoleLog("finish");
             }
             loadDFPConsole && clearInterval(loadDFPConsole);
+        }
+        if(f) {
+            var rd = JSON.parse(f[1]);
+            window.DFPConsole.slotsSort = rd;
         }
     });
 

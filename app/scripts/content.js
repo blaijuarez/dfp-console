@@ -3,7 +3,7 @@
 
     window.addEventListener('message', function (e) {
         var m = e.data.match ? e.data.match(/^dfpStream(.*)/) : null;
-        m && DFPOutput(parserDFPConsole(e.data.replace("dfpStream","")));
+        m && DFPOutput(parserDFPConsole(m[1]));
     });
 
     var parserDFPConsole = function(data) {
@@ -14,13 +14,18 @@
             br = output.slots[b].rendered ? output.slots[b].rendered : output.slots[b].renderEnded;
             return (ar - br);
         });
+        DFPComunicator("send", "dfpFinishParse"+JSON.stringify(output.slotsSort), "*");
         return output;
     };
 
     window.onload = function () {
         setTimeout(function(){
-            window.postMessage("dfpForceConsole", "*");
+            DFPComunicator("send", "dfpForceConsole", "*");
         },5000);
+    };
+
+    var DFPComunicator = function(action, data, domine) {
+        window.postMessage(data, domine);
     };
 
     var DFPOutput = function (output) {
