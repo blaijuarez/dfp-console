@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>DFP Console</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/bootstrap-switch.min.css" rel="stylesheet">
+    <style>body{width:350px;}</style>
+</head>
+<body>
+
+DETECTAR SI EXISTE googletag EN LA PAGINA:
+<br/>
+MOSTRAR MENSAJE
+<br/>
+<br/>
+
+<hr/>
+<form>
+    <fieldset>
+        <legend>Initial load</legend>
+        <input type="radio" name="disableInitialLoad" value="true"> Disable
+        <input type="radio" name="disableInitialLoad" value="false"> Enable<br>
+    </fieldset>
+    <fieldset>
+        <legend>Mode request</legend>
+        <input type="radio" name="singleRequest" value="true"> Single
+        <input type="radio" name="singleRequest" value="false"> Multi<br>
+    </fieldset>
+    <fieldset>
+        <legend>Rendering mode</legend>
+        <input type="radio" name="asyncRendering" value="true"> Async
+        <input type="radio" name="asyncRendering" value="false"> Sync<br>
+    </fieldset>
+
+    <button id="btn_reset" value="Eso es!">Reset</button>
+
+</form>
+
+<script type="text/javascript" src="js/popup.js"></script>
+<script type="text/javascript" src="js/bootstrap-switch.min.js"></script>
+
+</body>
+</html>

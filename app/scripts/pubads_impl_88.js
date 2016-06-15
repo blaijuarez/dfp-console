@@ -5,72 +5,72 @@
     window.DFPConsole = {"slots":{},"startTime":performance.now()};
     var loadDFPConsole = setInterval(function() {console.info("Cargando DFP Console...")},1000),
         k, n = this, r = function (a) {
-        return void 0 !== a
-    }, aa = function () {
-    }, ba = function (a) {
-        var b = typeof a;
-        if ("object" == b)if (a) {
-            if (a instanceof Array)return "array";
-            if (a instanceof Object)return b;
-            var c = Object.prototype.toString.call(a);
-            if ("[object Window]" == c)return "object";
-            if ("[object Array]" == c || "number" == typeof a.length && "undefined" != typeof a.splice && "undefined" != typeof a.propertyIsEnumerable && !a.propertyIsEnumerable("splice"))return "array";
-            if ("[object Function]" == c || "undefined" != typeof a.call && "undefined" != typeof a.propertyIsEnumerable && !a.propertyIsEnumerable("call"))return "function"
-        } else return "null"; else if ("function" == b && "undefined" == typeof a.call)return "object";
-        return b
-    }, t = function (a) {
-        return "array" == ba(a)
-    }, ca = function (a) {
-        var b = ba(a);
-        return "array" == b || "object" == b && "number" == typeof a.length
-    }, v = function (a) {
-        return "string" == typeof a
-    }, da = function (a) {
-        return "boolean" == typeof a
-    }, w = function (a) {
-        return "number" == typeof a
-    }, ea = function (a) {
-        return "function" == ba(a)
-    }, x = function (a) {
-        var b = typeof a;
-        return "object" ==
-            b && null != a || "function" == b
-    }, fa = "closure_uid_" + (1E9 * Math.random() >>> 0), ga = 0, ha = function (a, b, c) {
-        return a.call.apply(a.bind, arguments)
-    }, ia = function (a, b, c) {
-        if (!a)throw Error();
-        if (2 < arguments.length) {
-            var d = Array.prototype.slice.call(arguments, 2);
-            return function () {
-                var c = Array.prototype.slice.call(arguments);
-                Array.prototype.unshift.apply(c, d);
-                return a.apply(b, c)
+            return void 0 !== a
+        }, aa = function () {
+        }, ba = function (a) {
+            var b = typeof a;
+            if ("object" == b)if (a) {
+                if (a instanceof Array)return "array";
+                if (a instanceof Object)return b;
+                var c = Object.prototype.toString.call(a);
+                if ("[object Window]" == c)return "object";
+                if ("[object Array]" == c || "number" == typeof a.length && "undefined" != typeof a.splice && "undefined" != typeof a.propertyIsEnumerable && !a.propertyIsEnumerable("splice"))return "array";
+                if ("[object Function]" == c || "undefined" != typeof a.call && "undefined" != typeof a.propertyIsEnumerable && !a.propertyIsEnumerable("call"))return "function"
+            } else return "null"; else if ("function" == b && "undefined" == typeof a.call)return "object";
+            return b
+        }, t = function (a) {
+            return "array" == ba(a)
+        }, ca = function (a) {
+            var b = ba(a);
+            return "array" == b || "object" == b && "number" == typeof a.length
+        }, v = function (a) {
+            return "string" == typeof a
+        }, da = function (a) {
+            return "boolean" == typeof a
+        }, w = function (a) {
+            return "number" == typeof a
+        }, ea = function (a) {
+            return "function" == ba(a)
+        }, x = function (a) {
+            var b = typeof a;
+            return "object" ==
+                b && null != a || "function" == b
+        }, fa = "closure_uid_" + (1E9 * Math.random() >>> 0), ga = 0, ha = function (a, b, c) {
+            return a.call.apply(a.bind, arguments)
+        }, ia = function (a, b, c) {
+            if (!a)throw Error();
+            if (2 < arguments.length) {
+                var d = Array.prototype.slice.call(arguments, 2);
+                return function () {
+                    var c = Array.prototype.slice.call(arguments);
+                    Array.prototype.unshift.apply(c, d);
+                    return a.apply(b, c)
+                }
             }
-        }
-        return function () {
-            return a.apply(b, arguments)
-        }
-    }, y = function (a, b, c) {
-        y = Function.prototype.bind && -1 != Function.prototype.bind.toString().indexOf("native code") ?
-            ha : ia;
-        return y.apply(null, arguments)
-    }, ja = function (a, b) {
-        var c = a.split("."), d = n;
-        c[0] in d || !d.execScript || d.execScript("var " + c[0]);
-        for (var e; c.length && (e = c.shift());)!c.length && r(b) ? d[e] = b : d[e] ? d = d[e] : d = d[e] = {}
-    }, z = function (a, b) {
-        function c() {
-        }
+            return function () {
+                return a.apply(b, arguments)
+            }
+        }, y = function (a, b, c) {
+            y = Function.prototype.bind && -1 != Function.prototype.bind.toString().indexOf("native code") ?
+                ha : ia;
+            return y.apply(null, arguments)
+        }, ja = function (a, b) {
+            var c = a.split("."), d = n;
+            c[0] in d || !d.execScript || d.execScript("var " + c[0]);
+            for (var e; c.length && (e = c.shift());)!c.length && r(b) ? d[e] = b : d[e] ? d = d[e] : d = d[e] = {}
+        }, z = function (a, b) {
+            function c() {
+            }
 
-        c.prototype = b.prototype;
-        a.qa = b.prototype;
-        a.prototype = new c;
-        a.prototype.constructor = a;
-        a.Eb = function (a, c, f) {
-            for (var g = Array(arguments.length - 2), h = 2; h < arguments.length; h++)g[h - 2] = arguments[h];
-            return b.prototype[c].apply(a, g)
-        }
-    };
+            c.prototype = b.prototype;
+            a.qa = b.prototype;
+            a.prototype = new c;
+            a.prototype.constructor = a;
+            a.Eb = function (a, c, f) {
+                for (var g = Array(arguments.length - 2), h = 2; h < arguments.length; h++)g[h - 2] = arguments[h];
+                return b.prototype[c].apply(a, g)
+            }
+        };
     var ka = function () {
         return n.googletag || (n.googletag = {})
     }, A = function (a, b) {
@@ -5903,6 +5903,18 @@
         return !0
     }, bm = function (a) {
         if (!a.X && a.j) {
+            var disableInitialLoad = window.localStorage.getItem("disableInitialLoad");
+            var singleRequest = window.localStorage.getItem("singleRequest");
+            var asyncRendering = window.localStorage.getItem("asyncRendering");
+            if (disableInitialLoad !== null) {
+                a.U = disableInitialLoad;
+            }
+            if (singleRequest !== null) {
+                a.u = singleRequest;
+            }
+            if (asyncRendering !== null) {
+                a.m = asyncRendering;
+            }
             a.X = !0;
             if (a.u) {
                 a.m ? a.j.enableAsyncSingleRequest() : a.j.enableSingleRequest();
@@ -6688,51 +6700,50 @@
         }
     });
     var vm = null, wm = function () {
-        var a = sg() + "//publisherconsole.appspot.com/js/loader.js";
-        hd(document, a)
-    }, xm = function () {
-        var a = window, b = document;
-        if (ka()._pubconsole_disable_)return !1;
-        var c;
-        c = document.cookie.split("google_pubconsole=");
-        if (c = 2 == c.length ? c[1].split(";")[0] : "")if (c = c.split("|"), 0 < c.length && ("1" == c[0] || "0" == c[0]))return !0;
-        li();
-        c = !1;
-        try {
-            c = a.top.document.URL === b.URL
-        } catch (d) {
-        }
-        a = c ? b.URL : b.referrer;
-        return null !== hf(a, "google_debug") || null !== hf(a, "dfpdeb") || null !== hf(a, "google_console") || null !== hf(a,
-                "google_force_console") || null !== hf(a, "googfc")
-    }, zm = function () {
-        try {
-            xm() && wm(), ym()
-        } catch (a) {
-            O(2002, a)
-        }
-    }, ym = function () {
-        nd(window, "message", function (a) {
-            a.source == window && "gpt_open_pubconsole" == a.data.type && (a = a.data.slotDomId) && (window.googletag && window.googletag.console ? window.googletag.console.openConsole(a) : (vm = a, wm()))
-        })
-    },
+            var a = sg() + "//publisherconsole.appspot.com/js/loader.js";
+            hd(document, a)
+        }, xm = function () {
+            var a = window, b = document;
+            if (ka()._pubconsole_disable_)return !1;
+            var c;
+            c = document.cookie.split("google_pubconsole=");
+            if (c = 2 == c.length ? c[1].split(";")[0] : "")if (c = c.split("|"), 0 < c.length && ("1" == c[0] || "0" == c[0]))return !0;
+            li();
+            c = !1;
+            try {
+                c = a.top.document.URL === b.URL
+            } catch (d) {
+            }
+            a = c ? b.URL : b.referrer;
+            return null !== hf(a, "google_debug") || null !== hf(a, "dfpdeb") || null !== hf(a, "google_console") || null !== hf(a,
+                    "google_force_console") || null !== hf(a, "googfc")
+        }, zm = function () {
+            try {
+                xm() && wm(), ym()
+            } catch (a) {
+                O(2002, a)
+            }
+        }, ym = function () {
+            nd(window, "message", function (a) {
+                a.source == window && "gpt_open_pubconsole" == a.data.type && (a = a.data.slotDomId) && (window.googletag && window.googletag.console ? window.googletag.console.openConsole(a) : (vm = a, wm()))
+            })
+        },
 
-    DFPConsoleLog = function (action,slot) {
-        if(action==="finish") {
-            loadDFPConsole && clearInterval(loadDFPConsole);
-            window.DFPConsole["ready"]=true;
-            window.DFPConsole["endTime"]=performance.now();
-            window.postMessage("dfpStream"+JSON.stringify(window.DFPConsole), "*");
-            return;
-        }
-        var idSlot = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
-        for(var key in slot.w) {
-            if(/^(p|pos|slot)$/.test(key)) idSlot = slot.w[key][0];
-        }
-        if(!(idSlot in window.DFPConsole.slots)) window.DFPConsole.slots[idSlot]={};
-        window.DFPConsole.slots[idSlot]["id"] = slot.m.o;
-        window.DFPConsole.slots[idSlot][action] = window.performance.now();
-    };
+        DFPConsoleLog = function (action,slot) {
+            if(action==="finish") {
+                loadDFPConsole && clearInterval(loadDFPConsole);
+                window.DFPConsole["endTime"]=performance.now();
+                window.postMessage("dfpStream"+JSON.stringify(window.DFPConsole), "*");
+                return;
+            }
+            var idSlot = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+            for(var key in slot.w) {
+                if(/^(p|pos|slot)$/.test(key)) idSlot = slot.w[key][0];
+            }
+            if(!(idSlot in window.DFPConsole.slots)) window.DFPConsole.slots[idSlot]={};
+            window.DFPConsole.slots[idSlot]["id"] = slot.m.o;
+            window.DFPConsole.slots[idSlot][action] = window.performance.now();
+        };
 
     window.addEventListener('message', function (e) {
         var m = e.data.match ? e.data.match(/^dfpForceConsole(.*)/) : null;
@@ -6747,6 +6758,7 @@
         if(f) {
             var rd = JSON.parse(f[1]);
             window.DFPConsole.slotsSort = rd;
+            window.DFPConsole["ready"]=true;
         }
     });
 
