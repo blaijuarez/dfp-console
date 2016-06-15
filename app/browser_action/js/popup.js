@@ -1,58 +1,50 @@
 (function() {
     "use_strict";
 
-    window.onload = function () {
-
-        function Prefs() {
-
-            var formData = null;
-
-            function getData() {
-                return formData;
-            }
-
-            function setData(value) {
-                formData = value;
-            }
-
-            return {
-                getData: getData,
-                setData: setData
-            };
+    function Prefs() {
+        var formData = null;
+        return {
+            getData: getData,
+            setData: setData
+        };
+        function getData() {
+            return formData;
         }
+        function setData(value) {
+            formData = value;
+        }
+    }
 
-        var initialData = new Prefs(),
+    const modes = ["disableInitialLoad", "singleRequest", "asyncRendering"];
+    var initialData = new Prefs(),
+        p = null,
+        requestQuery = function (data, callback) {
 
-            p = null,
-
-            requestQuery = function (data, callback) {
-                chrome.tabs.query({
-                    active: true,
-                    currentWindow: true
-                }, function (tabs) {
-                    chrome.tabs.sendMessage(
-                        tabs[0].id,
-                        data, callback);
-                });
-            },
-
-            resetValues = function () {
-                requestQuery({from: 'popup', subject: 'resetLocalStorage'}, initialData.setData);
-            },
-
-            init = function () {
-                var modes = ["disableInitialLoad", "singleRequest", "asyncRendering"];
-
-                p = new Promise(
-                    function (resolve) {
-                        requestQuery({from: 'popup', subject: 'getLocalStorage', modes: modes}, allReady);
-                        function allReady(s) {
-                            initialData.setData(s);
-                            resolve(initialData);
-                        }
+            chrome.tabs.query({
+                active: true,
+                currentWindow: true
+            }, function (tabs) {
+                chrome.tabs.sendMessage(
+                    tabs[0].id,
+                    data, callback);
+            });
+        },
+        resetValues = function (data) {
+            requestQuery({from: 'popup', subject: 'resetLocalStorage', modes: data}, null);
+        },
+        init = function () {
+            p = new Promise(
+                function (resolve) {
+                    requestQuery({from: 'popup', subject: 'getLocalStorage', modes: modes}, allReady);
+                    function allReady(s) {
+                        initialData.setData(s);
+                        resolve(initialData);
                     }
-                );
-            };
+                }
+            );
+        };
+
+    window.onload = function () {
 
         init();
 
@@ -67,12 +59,17 @@
                         }
                     }
                 }
-
                 r[i].onclick = function (e) {
                     var sender = {"name": this.name, "value": this.value};
                     requestQuery({from: 'popup', subject: 'setLocalStorage', data: sender}, null);
                 }
             }
+
+            var bReset = document.getElementById("btn_reset");
+            bReset.onclick = function (e) {
+                resetValues(modes);
+            }
+            
         });
     };
 })();

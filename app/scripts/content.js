@@ -2,20 +2,29 @@
     "use_strict";
     
     chrome.runtime.onMessage.addListener(function (msg, sender, response) {
-        if ((msg.from === 'popup') && (msg.subject === 'setLocalStorage')) {
-            window.localStorage.setItem(msg.data.name, msg.data.value);
-        }
-        if ((msg.from === 'popup') && (msg.subject === 'getLocalStorage')) {
-            var dataStorage = {};
 
-            for(var i=0,l=msg.modes.length; i<l; i++) {
-                var ls = window.localStorage.getItem(msg.modes[i]);
-
-                if(ls) {
-                    dataStorage[msg.modes[i]] = ls;
-                }
+        if (msg.from === 'popup') {
+            
+            switch (msg.subject) {
+                case "setLocalStorage":
+                    window.localStorage.setItem(msg.data.name, msg.data.value);
+                    break;
+                case "getLocalStorage":
+                    var dataStorage = {};
+                    for (var i = 0, l = msg.modes.length; i < l; i++) {
+                        var ls = window.localStorage.getItem(msg.modes[i]);
+                        if (ls) {
+                            dataStorage[msg.modes[i]] = ls;
+                        }
+                    }
+                    response(dataStorage);
+                    break;
+                case "resetLocalStorage":
+                    for (var i = 0, l = msg.modes.length; i < l; i++) {
+                        window.localStorage.removeItem(msg.modes[i]);
+                    }
+                    break;
             }
-            response(dataStorage);
         }
     });
 
