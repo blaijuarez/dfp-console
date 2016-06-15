@@ -66,9 +66,24 @@
             }
 
             var bReset = document.getElementById("btn_reset");
-            bReset.onclick = function (e) {
+            bReset.onclick = function () {
                 resetValues(modes);
-            }
+            };
+
+            var bReload = document.getElementById("btn_reload");
+            bReload.onclick = function () {
+                requestQuery({from: 'popup', subject: 'reload'}, null);
+            };
+
+            var bRefresh = document.getElementById("btn_refresh");
+            bRefresh.onclick = function (e) {
+                requestQuery({from: 'popup', subject: 'refreshAds'}, null);
+            };
+
+            var bShow = document.getElementById("btn_show");
+            bShow.onclick = function (e) {
+                requestQuery({from: 'popup', subject: 'showConsole'}, null);
+            };
             
         });
     };

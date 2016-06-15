@@ -4,7 +4,7 @@
     chrome.runtime.onMessage.addListener(function (msg, sender, response) {
 
         if (msg.from === 'popup') {
-            
+
             switch (msg.subject) {
                 case "setLocalStorage":
                     window.localStorage.setItem(msg.data.name, msg.data.value);
@@ -23,6 +23,15 @@
                     for (var i = 0, l = msg.modes.length; i < l; i++) {
                         window.localStorage.removeItem(msg.modes[i]);
                     }
+                    break;
+                case "refreshAds":
+                    DFPComunicator("send", "dfpRefreshAds", "*");
+                    break;
+                case "reload":
+                    DFPComunicator("send", "dfpReload", "*");
+                    break;
+                case "showConsole":
+                    DFPComunicator("send", "dfpShowConsole", "*");
                     break;
             }
         }

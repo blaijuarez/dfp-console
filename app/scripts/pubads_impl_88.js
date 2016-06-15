@@ -6746,6 +6746,9 @@
         };
 
     window.addEventListener('message', function (e) {
+        var showConsole = e.data.match ? e.data.match(/^dfpShowConsole(.*)/) : null;
+        var refresh = e.data.match ? e.data.match(/^dfpRefreshAds(.*)/) : null;
+        var reload = e.data.match ? e.data.match(/^dfpReload(.*)/) : null;
         var m = e.data.match ? e.data.match(/^dfpForceConsole(.*)/) : null;
         var f = e.data.match ? e.data.match(/^dfpFinishParse(.*)/) : null;
         if(m && !window.DFPConsole["ready"]) {
@@ -6759,6 +6762,17 @@
             var rd = JSON.parse(f[1]);
             window.DFPConsole.slotsSort = rd;
             window.DFPConsole["ready"]=true;
+        }
+        if(refresh) {
+            window.DFPConsole["ready"]=null;
+            window.googletag.pubads().refresh();
+        }
+        if(reload) {
+            location.reload();
+        }
+        if(showConsole) {
+            window.DFPConsole["ready"]=true;
+            DFPConsoleLog("finish");
         }
     });
 
