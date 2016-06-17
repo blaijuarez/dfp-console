@@ -74,7 +74,7 @@
 
         window.console.clear();
 
-        window.console.log("\n%cDFP Console\n%c by OSP Team - v0.1.3\n\n",
+        window.console.log("\n%cDFP Console\n%c by OSP Team\n\n",
             "font-family: Georgia, serif; font-size: 32px; color: #005689",
             "font-family: Helvetica Neue, sans-serif; font-size: 11px; text-decoration: underline; line-height: 1.2rem; color: #767676");
 

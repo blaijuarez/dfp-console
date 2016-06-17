@@ -33,6 +33,12 @@
             requestQuery({from: 'popup', subject: 'resetLocalStorage', modes: data}, null);
         },
         init = function () {
+
+            $.fn.bootstrapSwitch.defaults.size = 'mini';
+            $.fn.bootstrapSwitch.defaults.handleWidth = 40;
+            $.fn.bootstrapSwitch.defaults.offColor = "primary";
+
+
             p = new Promise(
                 function (resolve) {
                     requestQuery({from: 'popup', subject: 'getLocalStorage', modes: modes}, allReady);
@@ -50,20 +56,7 @@
 
         p.then(function(response) {
             var formData = response.getData();
-            var r = document.getElementsByTagName("input");
-            for (var i = 0, l = r.length; i < l; i++) {
-                if (formData !== null) {
-                    for (var key in formData) {
-                        if (r[i].name === key && r[i].value == formData[key]) {
-                            r[i].setAttribute("checked", true);
-                        }
-                    }
-                }
-                r[i].onclick = function (e) {
-                    var sender = {"name": this.name, "value": this.value};
-                    requestQuery({from: 'popup', subject: 'setLocalStorage', data: sender}, null);
-                }
-            }
+
 
             var bReset = document.getElementById("btn_reset");
             bReset.onclick = function () {
@@ -84,6 +77,31 @@
             bShow.onclick = function (e) {
                 requestQuery({from: 'popup', subject: 'showConsole'}, null);
             };
+
+
+
+            var r = document.getElementsByTagName("input");
+            for (var i = 0, l = r.length; i < l; i++) {
+
+
+                $("[name='"+r[i].name+"']").bootstrapSwitch({
+                    state: true,
+                    wrapperClass: "pull-right",
+                    onInit: function(event, state) {
+                        /*if (formData !== null) {
+                            for (var key in formData) {
+                                if (r[i].name === key && r[i].value == formData[key]) {
+                                    r[i].setAttribute("checked", true);
+                                }
+                            }
+                        }*/
+                    },
+                    onSwitchChange: function(event, state) {
+                        var sender = {"name": this.name, "value": state};
+                        requestQuery({from: 'popup', subject: 'setLocalStorage', data: sender}, null);
+                    }
+                });
+            }
             
         });
     };

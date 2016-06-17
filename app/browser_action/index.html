@@ -4,43 +4,30 @@
     <title>DFP Console</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet">
     <link href="css/bootstrap-switch.min.css" rel="stylesheet">
-    <style>body{width:350px;}</style>
+    <link href="css/popup.css" rel="stylesheet">
 </head>
-<body>
+<body class="panel-body">
 
-DETECTAR SI EXISTE googletag EN LA PAGINA:
-<br/>
-MOSTRAR MENSAJE
-<br/>
-<br/>
+<ul class="list-group">
+    <li class="list-group-item">Initial load <input type="checkbox" data-on-color="default" data-on-text="Disable" data-off-text="Enable" name="disableInitialLoad"></li>
+    <li class="list-group-item">Mode request <input type="checkbox" data-on-text="Single" data-off-text="Multi" name="singleRequest"></li>
+    <li class="list-group-item">Rendering mode <input type="checkbox" data-on-text="Async" data-off-text="Sync" name="asyncRendering"></li>
+</ul>
 
-<hr/>
 <form>
-    <fieldset>
-        <legend>Initial load</legend>
-        <input type="radio" name="disableInitialLoad" value="true"> Disable
-        <input type="radio" name="disableInitialLoad" value="false"> Enable<br>
-    </fieldset>
-    <fieldset>
-        <legend>Mode request</legend>
-        <input type="radio" name="singleRequest" value="true"> Single
-        <input type="radio" name="singleRequest" value="false"> Multi<br>
-    </fieldset>
-    <fieldset>
-        <legend>Rendering mode</legend>
-        <input type="radio" name="asyncRendering" value="true"> Async
-        <input type="radio" name="asyncRendering" value="false"> Sync<br>
-    </fieldset>
-
-    <button id="btn_reset">Reset</button>
-    <button id="btn_reload">Reload page</button>
-    <button id="btn_refresh">Refresh ads</button>
-    <button id="btn_show">Show Console</button>
+    <button type="button" class="btn btn-danger navbar-btn" id="btn_reset">Reset</button>
+    <button type="button" class="btn btn-default navbar-btn" id="btn_reload">Reload page</button>
+    <button type="button" class="btn btn-default navbar-btn" id="btn_refresh">Refresh ads</button>
+    <button type="button" class="btn btn-default navbar-btn" id="btn_show">Show Console</button>
 
 </form>
 
+<script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/popup.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/bootstrap-switch.min.js"></script>
 
 </body>

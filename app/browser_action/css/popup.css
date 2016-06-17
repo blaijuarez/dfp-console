@@ -1,0 +1,7 @@
+body{
+    width: 350px;
+}
+
+.bootstrap-switch-pull-right {
+    float: right!important;
+}
