@@ -15,7 +15,7 @@
         }
     }
 
-    const modes = ["disableInitialLoad", "singleRequest", "asyncRendering"];
+    const modes = ["dfp_disableInitialLoad", "dfp_singleRequest", "dfp_asyncRendering", "dfp_extensionEnabled"];
     var initialData = new Prefs(),
         p = null,
         DFPObject = null,
@@ -30,8 +30,19 @@
                     data, callback);
             });
         },
-        resetValues = function (data) {
-            requestQuery({from: 'popup', subject: 'resetLocalStorage', modes: data}, null);
+        enableDisable = function (value) {
+
+            console.log(value);
+
+            if(value!=="true") {
+                $('.list-group').addClass("disable");
+                $("#btn_reset").addClass("alert-danger").removeClass("alert-default");
+                $('input').bootstrapToggle('disable');
+            }else{
+                $('.list-group').removeClass("disable");
+                $("#btn_reset").addClass("alert-default").removeClass("alert-danger");
+                $('input').bootstrapToggle('enable');
+            }
         },
         showAlerts = function (data) {
             DFPObject = data;
@@ -59,33 +70,15 @@
 
             if(!DFPObject) return;
 
-            //if(DFPObject && !DFPObject.ready) return;
-
-            console.log(DFPObject);
+            var formData = response.getData(),
+                bReset = document.getElementById("btn_reset"),
+                extensionEnabled = formData["dfp_extensionEnabled"] || true,
+                r = document.getElementsByTagName("input");
 
             alerts[0].style.display = "block";
             alerts[1].style.display = "none";
             overlay.style.display = "none";
 
-            var formData = response.getData();
-            var bReset = document.getElementById("btn_reset");
-            bReset.onclick = function () {
-                $('input').bootstrapToggle('off');
-                resetValues(modes);
-            };
-            /*var bReload = document.getElementById("btn_reload");
-            bReload.onclick = function () {
-                requestQuery({from: 'popup', subject: 'reload'}, null);
-            };*/
-            var bRefresh = document.getElementById("btn_refresh");
-            bRefresh.onclick = function (e) {
-                requestQuery({from: 'popup', subject: 'refreshAds'}, null);
-            };
-            var bShow = document.getElementById("btn_show");
-            bShow.onclick = function (e) {
-                requestQuery({from: 'popup', subject: 'showConsole'}, null);
-            };
-            var r = document.getElementsByTagName("input");
             for (var i = 0, l = r.length; i < l; i++) {
                 if (formData !== null) {
                     var state = null;
@@ -100,6 +93,34 @@
                     requestQuery({from: 'popup', subject: 'setLocalStorage', data: sender}, null);
                 });
             }
+
+            $(bReset).prop("value",extensionEnabled);
+            enableDisable(extensionEnabled);
+
+            bReset.onclick = function () {
+                var value = $(this).prop("value") !=="true" ? "true" : "false",
+                    sender = {"name": $(this).attr("name"), "value":value};
+
+                $(this).prop("value",value);
+                enableDisable(value);
+
+                requestQuery({from: 'popup', subject: 'setLocalStorage', data: sender}, null);
+            };
+
+            var bRefresh = document.getElementById("btn_refresh");
+            bRefresh.onclick = function (e) {
+                requestQuery({from: 'popup', subject: 'refreshAds'}, null);
+            };
+
+            var bShow = document.getElementById("btn_show");
+            bShow.onclick = function (e) {
+                requestQuery({from: 'popup', subject: 'showConsole'}, null);
+            };
+
+            /*var bReload = document.getElementById("btn_reload");
+             bReload.onclick = function () {
+             requestQuery({from: 'popup', subject: 'reload'}, null);
+             };*/
         });
     };
 })();
