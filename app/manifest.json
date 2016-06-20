@@ -1,0 +1,42 @@
+{
+  "name": "DFP Console",
+  "version": "0.2.0",
+  "manifest_version": 2,
+  "description": "Mide los tiempos de los anuncios en DFP de Google.",
+  "short_name": "DFP Console",
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+
+  "browser_action": {
+    "default_icon": { "19": "images/icon16.png", "38": "images/icon48.png" },
+    "default_title": "DFP Console",
+    "default_popup": "browser_action/index.html"
+  },
+
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "background",
+    "webRequest",
+    "webRequestBlocking",
+    "*://*/*"],
+
+  "web_accessible_resources": ["scripts/*"],
+
+  "background": {
+    "scripts": ["scripts/background.js"]
+  },
+
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "matches": ["*://*/*"],
+      "all_frames":false,
+      "js": ["scripts/content.js"]
+    }
+  ]
+}
+
