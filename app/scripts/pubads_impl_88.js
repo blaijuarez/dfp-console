@@ -6752,10 +6752,8 @@
         var m = e.data.match ? e.data.match(/^dfpForceConsole(.*)/) : null;
         var f = e.data.match ? e.data.match(/^dfpFinishParse(.*)/) : null;
         if(m && !window.DFPConsole["ready"]) {
-            var r = confirm("Tenemos problemas para capturar los datos de DFP. Quieres forzar la consola?");
-            if (r == true) {
-                DFPConsoleLog("finish");
-            }
+            alert("Tenemos problemas para capturar los datos de DFP. Vamos a forzar la consola.");
+            DFPConsoleLog("finish");
             loadDFPConsole && clearInterval(loadDFPConsole);
         }
         if(f) {
