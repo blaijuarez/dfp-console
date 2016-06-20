@@ -50,7 +50,6 @@
         };
 
     window.onload = function () {
-
         var alerts = document.getElementsByClassName("alert");
         var overlay = document.getElementById("overlay");
 
