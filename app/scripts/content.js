@@ -1,5 +1,7 @@
 (function() {
     "use_strict";
+
+    var DFPConsoleObject = null;
     
     chrome.runtime.onMessage.addListener(function (msg, sender, response) {
 
@@ -32,6 +34,9 @@
                     break;
                 case "showConsole":
                     DFPComunicator("send", "dfpShowConsole", "*");
+                    break;
+                case "getDFPConsoleObject":
+                    response(DFPConsoleObject);
                     break;
             }
         }
@@ -66,6 +71,9 @@
     };
 
     var DFPOutput = function (output) {
+
+        DFPConsoleObject = output;
+
         var t = window.performance.timing,
             interactive = t.domInteractive - t.navigationStart,
             load = t.loadEventEnd - t.navigationStart,

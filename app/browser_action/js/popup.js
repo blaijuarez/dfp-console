@@ -18,6 +18,7 @@
     const modes = ["disableInitialLoad", "singleRequest", "asyncRendering"];
     var initialData = new Prefs(),
         p = null,
+        DFPObject = null,
         requestQuery = function (data, callback) {
 
             chrome.tabs.query({
@@ -32,13 +33,11 @@
         resetValues = function (data) {
             requestQuery({from: 'popup', subject: 'resetLocalStorage', modes: data}, null);
         },
+        showAlerts = function (data) {
+            DFPObject = data;
+        },
         init = function () {
-
-            $.fn.bootstrapSwitch.defaults.size = 'mini';
-            $.fn.bootstrapSwitch.defaults.handleWidth = 40;
-            $.fn.bootstrapSwitch.defaults.offColor = "primary";
-
-
+            requestQuery({from: 'popup', subject: 'getDFPConsoleObject', modes: modes}, showAlerts);
             p = new Promise(
                 function (resolve) {
                     requestQuery({from: 'popup', subject: 'getLocalStorage', modes: modes}, allReady);
@@ -52,57 +51,56 @@
 
     window.onload = function () {
 
+        var alerts = document.getElementsByClassName("alert");
+        var overlay = document.getElementById("overlay");
+
         init();
 
         p.then(function(response) {
+
+            if(!DFPObject) return;
+
+            //if(DFPObject && !DFPObject.ready) return;
+
+            console.log(DFPObject);
+
+            alerts[0].style.display = "block";
+            alerts[1].style.display = "none";
+            overlay.style.display = "none";
+
             var formData = response.getData();
-
-
             var bReset = document.getElementById("btn_reset");
             bReset.onclick = function () {
+                $('input').bootstrapToggle('off');
                 resetValues(modes);
             };
-
-            var bReload = document.getElementById("btn_reload");
+            /*var bReload = document.getElementById("btn_reload");
             bReload.onclick = function () {
                 requestQuery({from: 'popup', subject: 'reload'}, null);
-            };
-
+            };*/
             var bRefresh = document.getElementById("btn_refresh");
             bRefresh.onclick = function (e) {
                 requestQuery({from: 'popup', subject: 'refreshAds'}, null);
             };
-
             var bShow = document.getElementById("btn_show");
             bShow.onclick = function (e) {
                 requestQuery({from: 'popup', subject: 'showConsole'}, null);
             };
-
-
-
             var r = document.getElementsByTagName("input");
             for (var i = 0, l = r.length; i < l; i++) {
-
-
-                $("[name='"+r[i].name+"']").bootstrapSwitch({
-                    state: true,
-                    wrapperClass: "pull-right",
-                    onInit: function(event, state) {
-                        /*if (formData !== null) {
-                            for (var key in formData) {
-                                if (r[i].name === key && r[i].value == formData[key]) {
-                                    r[i].setAttribute("checked", true);
-                                }
-                            }
-                        }*/
-                    },
-                    onSwitchChange: function(event, state) {
-                        var sender = {"name": this.name, "value": state};
-                        requestQuery({from: 'popup', subject: 'setLocalStorage', data: sender}, null);
+                if (formData !== null) {
+                    var state = null;
+                    for (var key in formData) {
+                        if(r[i].name === key) {
+                            state = (formData[key] == 'true') ? 'on' : 'off';
+                        }
                     }
+                }
+                $("[name='"+r[i].name+"']").bootstrapToggle(state).change(function() {
+                    var sender = {"name": this.name, "value": $(this).prop('checked')};
+                    requestQuery({from: 'popup', subject: 'setLocalStorage', data: sender}, null);
                 });
             }
-            
         });
     };
 })();

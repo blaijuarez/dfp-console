@@ -6,29 +6,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap-theme.min.css" rel="stylesheet">
-    <link href="css/bootstrap-switch.min.css" rel="stylesheet">
+    <link href="css/bootstrap-toggle.min.css" rel="stylesheet">
     <link href="css/popup.css" rel="stylesheet">
 </head>
 <body class="panel-body">
 
+<div class="alert alert-success" role="alert" style="display: none">
+    <strong>Todo correcto!</strong> La configuración se han cargado satisfactoriamente!.
+</div>
+
+<div class="alert alert-warning" role="alert">
+    <strong>Un momento!</strong> Se está cargando la configuración.
+</div>
+
 <ul class="list-group">
-    <li class="list-group-item">Initial load <input type="checkbox" data-on-color="default" data-on-text="Disable" data-off-text="Enable" name="disableInitialLoad"></li>
-    <li class="list-group-item">Mode request <input type="checkbox" data-on-text="Single" data-off-text="Multi" name="singleRequest"></li>
-    <li class="list-group-item">Rendering mode <input type="checkbox" data-on-text="Async" data-off-text="Sync" name="asyncRendering"></li>
+    <li class="list-group-item">Initial load <input type="checkbox" data-toggle="toggle" data-size="mini" data-width="60" data-style="pull-right" data-onstyle="default" data-offstyle="primary" data-on="Disable" data-off="Enable" name="disableInitialLoad"></li>
+    <li class="list-group-item">Mode request <input type="checkbox" data-toggle="toggle" data-size="mini" data-width="60" data-style="pull-right" data-offstyle="primary" data-on="Single" data-off="Multi" name="singleRequest"></li>
+    <li class="list-group-item">Rendering mode <input type="checkbox" data-toggle="toggle" data-size="mini" data-width="60" data-style="pull-right" data-offstyle="primary" data-on="Async" data-off="Sync" name="asyncRendering"></li>
 </ul>
 
-<form>
-    <button type="button" class="btn btn-danger navbar-btn" id="btn_reset">Reset</button>
-    <button type="button" class="btn btn-default navbar-btn" id="btn_reload">Reload page</button>
-    <button type="button" class="btn btn-default navbar-btn" id="btn_refresh">Refresh ads</button>
-    <button type="button" class="btn btn-default navbar-btn" id="btn_show">Show Console</button>
+<div id="overlay" class="overlay"></div>
 
-</form>
+<div class="btn-group" role="group">
+    <button type="button" class="btn btn-default" id="btn_reset">
+        <span class="glyphicon glyphicon-trash" aria-hidden="true"><b>Reset</b></span>
+    </button>
+    <!--button type="button" class="btn btn-default btn-xs" id="btn_reload">
+        <span class="glyphicon glyphicon-align-left" aria-hidden="true">Reload page</span>
+    </button-->
+    <button type="button" class="btn btn-default" id="btn_refresh">
+        <span class="glyphicon glyphicon-refresh" aria-hidden="true"><b>Refresh ads</b></span>
+    </button>
+    <button type="button" class="btn btn-default" id="btn_show">
+        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"><b>Show Console</b></span>
+    </button>
+
+</div>
 
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/popup.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/bootstrap-switch.min.js"></script>
+<script type="text/javascript" src="js/bootstrap-toggle.min.js"></script>
 
 </body>
 </html>
