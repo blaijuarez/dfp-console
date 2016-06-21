@@ -5903,18 +5903,23 @@
         return !0
     }, bm = function (a) {
         if (!a.X && a.j) {
-            var disableInitialLoad = window.localStorage.getItem("disableInitialLoad");
-            var singleRequest = window.localStorage.getItem("singleRequest");
-            var asyncRendering = window.localStorage.getItem("asyncRendering");
-            if (disableInitialLoad !== null) {
-                a.U = disableInitialLoad;
+            var dfpEnabled = window.localStorage.getItem("dfp_extensionEnabled");
+            var disableInitialLoad = window.localStorage.getItem("dfp_disableInitialLoad");
+            var singleRequest = window.localStorage.getItem("dfp_singleRequest");
+            var asyncRendering = window.localStorage.getItem("dfp_asyncRendering");
+
+            if (dfpEnabled !== "false") {
+                if (disableInitialLoad !== null) {
+                    a.U = disableInitialLoad;
+                }
+                if (singleRequest !== null) {
+                    a.u = singleRequest;
+                }
+                if (asyncRendering !== null) {
+                    a.m = asyncRendering;
+                }
             }
-            if (singleRequest !== null) {
-                a.u = singleRequest;
-            }
-            if (asyncRendering !== null) {
-                a.m = asyncRendering;
-            }
+
             a.X = !0;
             if (a.u) {
                 a.m ? a.j.enableAsyncSingleRequest() : a.j.enableSingleRequest();

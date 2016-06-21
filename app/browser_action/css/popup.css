@@ -1,5 +1,5 @@
 body{
-    width: 383px;
+    width: 360px;
 }
 
 .glyphicon b {
@@ -19,4 +19,20 @@ body{
     bottom: 0;
     left: 0;
     opacity: .8;
+}
+
+.disable {
+    color: #ccc;
+}
+
+.cursor {
+    cursor: pointer;
+}
+
+.btn-sm2 {
+    padding: 5px 12px;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-top: -1px;
+    border-radius: 3px;
 }
