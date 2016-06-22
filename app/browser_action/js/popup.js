@@ -31,9 +31,7 @@
             });
         },
         enableDisable = function (value) {
-
-            console.log(value);
-
+            setButtonReset("value", value);
             if(value!=="true") {
                 $('.list-group').addClass("disable");
                 $("#btn_reset").addClass("alert-danger").removeClass("alert-default");
@@ -43,6 +41,10 @@
                 $("#btn_reset").addClass("alert-default").removeClass("alert-danger");
                 $('input').bootstrapToggle('enable');
             }
+        },
+        setButtonReset = function (k,v) {
+            var bReset = document.getElementById("btn_reset");
+            $(bReset).prop(k,v);
         },
         showAlerts = function (data) {
             DFPObject = data;
@@ -61,8 +63,6 @@
         };
 
     window.onload = function () {
-        var alerts = document.getElementsByClassName("alert");
-        var overlay = document.getElementById("overlay");
 
         init();
 
@@ -73,7 +73,9 @@
             var formData = response.getData(),
                 bReset = document.getElementById("btn_reset"),
                 extensionEnabled = formData["dfp_extensionEnabled"] || true,
-                r = document.getElementsByTagName("input");
+                r = document.getElementsByTagName("input"),
+                alerts = document.getElementsByClassName("alert"),
+                overlay = document.getElementById("overlay");
 
             alerts[0].style.display = "block";
             alerts[1].style.display = "none";
@@ -89,8 +91,9 @@
                     }
                 }
                 $("[name='"+r[i].name+"']").bootstrapToggle(state).change(function() {
-                    var sender = {"name": this.name, "value": $(this).prop('checked')};
-                    requestQuery({from: 'popup', subject: 'setLocalStorage', data: sender}, null);
+                    var sender = {"name": this.name, "value": $(this).prop('checked')},
+                        subject = ((/^.+disableInitialLoad$/).test(this.name) && !$(this).prop('checked')) ? "removeLocalStorage" : "setLocalStorage";
+                    requestQuery({from: 'popup', subject: subject, data: sender}, null);
                 });
             }
 
@@ -100,10 +103,7 @@
             bReset.onclick = function () {
                 var value = $(this).prop("value") !=="true" ? "true" : "false",
                     sender = {"name": $(this).attr("name"), "value":value};
-
-                $(this).prop("value",value);
                 enableDisable(value);
-
                 requestQuery({from: 'popup', subject: 'setLocalStorage', data: sender}, null);
             };
 
