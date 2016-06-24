@@ -34,12 +34,11 @@
                     DFPComunicator("send", "dfpShowConsole", "*");
                     break;
                 case "getDFPConsoleObject":
-                    response(DFPConsoleObject);
+                    response({DFPConsoleObject:DFPConsoleObject,origin:document.origin});
                     break;
             }
         }
     });
-
 
     window.addEventListener('message', function (e) {
         var m = e.data.match ? e.data.match(/^dfpStream(.*)/) : null;
