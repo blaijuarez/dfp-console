@@ -36,3 +36,11 @@ body{
     margin-top: -1px;
     border-radius: 3px;
 }
+
+.btn-group {
+    width: 100%;
+}
+
+button{
+    width:50%;
+}

@@ -2,7 +2,7 @@
 
     var window = this, document = this.document;
 
-    window.DFPConsole = {"slots":{},"startTime":performance.now()};
+    window.DFPConsole = {"slots":{},"startTime":performance.now(),"ts_startTime":Date.now()};
     var loadDFPConsole = setInterval(function() {console.info("Cargando DFP Console...")},1000),
         k, n = this, r = function (a) {
             return void 0 !== a
@@ -3257,6 +3257,7 @@
     k.fetchStarted = function (a) {
 
         DFPConsoleLog("fetchStarted",this);
+        DFPConsoleLog("ts_fetchStarted",this);
 
         this.B || bi(P(), "count_of_requested_slots");
         this.B = this.j.info(za(this.getAdUnitPath()), null, this);
@@ -3296,6 +3297,7 @@
                 Eh(b, "slotRenderEnded", a);
 
                 DFPConsoleLog("renderEnded", a.slot);
+                DFPConsoleLog("ts_renderEnded", a.slot);
 
             }
         })
@@ -5022,7 +5024,10 @@
                 f = wk(g, d, yk, !1, e, c);
                 nd(f, "load", function () {
 
+                    var ts = Date.now();
+
                     DFPConsoleLog("rendered",b);
+                    DFPConsoleLog("ts_rendered",b);
 
                     b.C && gi(P(), b.A, b.l);
                 })
@@ -6738,16 +6743,21 @@
             if(action==="finish") {
                 loadDFPConsole && clearInterval(loadDFPConsole);
                 window.DFPConsole["endTime"]=performance.now();
+                window.DFPConsole["ts_endTime"]=Date.now();
                 window.postMessage("dfpStream"+JSON.stringify(window.DFPConsole), "*");
                 return;
             }
-            var idSlot = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+            var idSlot = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5),
+                regTime = null;
             for(var key in slot.w) {
                 if(/^(p|pos|slot)$/.test(key)) idSlot = slot.w[key][0];
             }
+
             if(!(idSlot in window.DFPConsole.slots)) window.DFPConsole.slots[idSlot]={};
             window.DFPConsole.slots[idSlot]["id"] = slot.m.o;
-            window.DFPConsole.slots[idSlot][action] = window.performance.now();
+
+            regTime = /^ts_(fetchStarted|rendered|renderEnded)$/.test(action) ? Date.now() : window.performance.now();
+            window.DFPConsole.slots[idSlot][action] = regTime;
         };
 
     window.addEventListener('message', function (e) {

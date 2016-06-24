@@ -19,6 +19,7 @@
     var initialData = new Prefs(),
         p = null,
         DFPObject = null,
+        DFPorigin = null,
         requestQuery = function (data, callback) {
 
             chrome.tabs.query({
@@ -47,7 +48,8 @@
             $(bReset).prop(k,v);
         },
         showAlerts = function (data) {
-            DFPObject = data;
+            DFPObject = data.DFPConsoleObject;
+            DFPorigin = data.origin;
         },
         init = function () {
             requestQuery({from: 'popup', subject: 'getDFPConsoleObject', modes: modes}, showAlerts);
@@ -115,6 +117,11 @@
             var bShow = document.getElementById("btn_show");
             bShow.onclick = function (e) {
                 requestQuery({from: 'popup', subject: 'showConsole'}, null);
+            };
+
+            var bTimeline = document.getElementById("timeline");
+            bTimeline.onclick = function (e) {
+                chrome.tabs.create({ url: "../timeline/index.html?p="+DFPorigin+"&DFPObject="+encodeURI(JSON.stringify(DFPObject)) });
             };
 
             /*var bReload = document.getElementById("btn_reload");

@@ -20,7 +20,7 @@
 </div>
 
 <ul class="list-group">
-    <li class="list-group-item">Initial load <input type="checkbox" data-toggle="toggle" data-size="mini" data-width="60" data-style="pull-right" data-onstyle="default" data-offstyle="primary" data-on="Disable" data-off="Enable" name="dfp_disableInitialLoad"></li>
+    <li class="list-group-item">disableInitialLoad <input type="checkbox" data-toggle="toggle" data-size="mini" data-width="60" data-style="pull-right" data-onstyle="primary" data-offstyle="default" data-on="Enable" data-off="Disable" name="dfp_disableInitialLoad"></li>
     <li class="list-group-item">Mode request <input type="checkbox" data-toggle="toggle" data-size="mini" data-width="60" data-style="pull-right" data-offstyle="primary" data-on="Single" data-off="Multi" name="dfp_singleRequest"></li>
     <li class="list-group-item">Rendering mode <input type="checkbox" data-toggle="toggle" data-size="mini" data-width="60" data-style="pull-right" data-offstyle="primary" data-on="Async" data-off="Sync" name="dfp_asyncRendering"></li>
 </ul>
@@ -42,7 +42,11 @@
     </button>
 </div>
 
-<div id="btn_reset" name="dfp_extensionEnabled" class="cursor btn alert-default btn-sm pull-right glyphicon glyphicon-off"> </div>
+<div class="pull-right" style="margin-top: 10px;">
+    <div id="timeline" class="cursor btn btn-sm pull-left glyphicon glyphicon-stats"> </div>
+
+    <div id="btn_reset" name="dfp_extensionEnabled" class="cursor btn alert-default btn-sm pull-left glyphicon glyphicon-off"> </div>
+</div>
 
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/popup.js"></script>
