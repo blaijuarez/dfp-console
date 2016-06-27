@@ -27,6 +27,10 @@
                 var endTime = data.slots[k].ts_rendered ? data.slots[k].ts_rendered : data.slots[k].ts_renderEnded;
                 var starTime = data.slots[k].ts_fetchStarted;
 
+                if(starTime==undefined || endTime==undefined) continue;
+
+                console.log(starTime,endTime);
+
                 var slot = {label:"["+k+"]", priority:"others", times: [{"label": k,"starting_time": starTime, "ending_time": endTime}]};
 
                 if(/^(f|m|r|si|sd)$/.test(k)) {

@@ -8,9 +8,11 @@
             setData: setData
         };
         function getData() {
+            //console.log("get",formData);
             return formData;
         }
         function setData(value) {
+            //console.log("set",value);
             formData = value;
         }
     }
@@ -95,7 +97,7 @@
                 $("[name='"+r[i].name+"']").bootstrapToggle(state).change(function() {
                     var sender = {"name": this.name, "value": $(this).prop('checked')},
                         subject = ((/^.+disableInitialLoad$/).test(this.name) && !$(this).prop('checked')) ? "removeLocalStorage" : "setLocalStorage";
-                    requestQuery({from: 'popup', subject: subject, data: sender}, null);
+                    requestQuery({from: 'popup', subject: subject, modes: modes, data: sender}, initialData.setData);
                 });
             }
 
@@ -106,7 +108,13 @@
                 var value = $(this).prop("value") !=="true" ? "true" : "false",
                     sender = {"name": $(this).attr("name"), "value":value};
                 enableDisable(value);
-                requestQuery({from: 'popup', subject: 'setLocalStorage', data: sender}, null);
+                requestQuery({from: 'popup', subject: 'setLocalStorage', modes: modes, data: sender}, initialData.setData);
+
+                formData = initialData.getData();
+
+                if(value=="true" && (!formData.dfp_singleRequest || !formData.dfp_asyncRendering)) {
+                    setAll();
+                }
             };
 
             var bRefresh = document.getElementById("btn_refresh");
@@ -123,11 +131,21 @@
             bTimeline.onclick = function (e) {
                 chrome.tabs.create({ url: "../timeline/index.html?p="+DFPorigin+"&DFPObject="+encodeURI(JSON.stringify(DFPObject)) });
             };
-
-            /*var bReload = document.getElementById("btn_reload");
-             bReload.onclick = function () {
-             requestQuery({from: 'popup', subject: 'reload'}, null);
-             };*/
         });
+
+        function setAll() {
+            var r = document.getElementsByTagName("input");
+            for (var i = 0, l = r.length; i < l; i++) {
+
+                if(r[i].name=="dfp_disableInitialLoad") {
+                    continue;
+                }
+
+                var obj = $("[name='"+r[i].name+"']");
+                console.log(obj[0].name, obj.prop('checked'));
+                var sender = {"name": obj[0].name, "value": obj.prop('checked')};
+                requestQuery({from: 'popup', subject: "setLocalStorage", modes: modes, data: sender}, initialData.setData);
+            }
+        }
     };
 })();

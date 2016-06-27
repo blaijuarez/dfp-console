@@ -9,14 +9,6 @@
 
             switch (msg.subject) {
                 case "getLocalStorage":
-                    var dataStorage = {};
-                    for (var i = 0, l = msg.modes.length; i < l; i++) {
-                        var ls = window.localStorage.getItem(msg.modes[i]);
-                        if (ls) {
-                            dataStorage[msg.modes[i]] = ls;
-                        }
-                    }
-                    response(dataStorage);
                     break;
                 case "setLocalStorage":
                     window.localStorage.setItem(msg.data.name, msg.data.value);
@@ -36,6 +28,22 @@
                 case "getDFPConsoleObject":
                     response({DFPConsoleObject:DFPConsoleObject,origin:document.origin});
                     break;
+            }
+
+            if(response) {
+                var dataStorage = returnLocalStorage(msg.modes);
+                response(dataStorage);
+            }
+
+            function returnLocalStorage(data) {
+                var dataStorage = {};
+                for (var i = 0, l = data.length; i < l; i++) {
+                    var ls = window.localStorage.getItem(data[i]);
+                    if (ls) {
+                        dataStorage[data[i]] = ls;
+                    }
+                }
+                return dataStorage;
             }
         }
     });

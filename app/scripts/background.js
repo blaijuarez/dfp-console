@@ -2,9 +2,19 @@
     "use_strict";
 
     chrome.webRequest.onBeforeRequest.addListener(
-        function (info) {
-            return {redirectUrl: chrome.extension.getURL('scripts/pubads_impl_88.js')};
+        function (response) {
+
+            var redirect = {};
+
+            if (/^.+(tag\/js\/gpt)\.js$/.test(response.url) && !oneTime) {
+                //redirect.redirectUrl =  chrome.extension.getURL('scripts/gpt.js');
+                //redirect.cancel =  true;
+            }
+            if (/^.+(gpt\/pubads_impl.+)\.js$/.test(response.url)) {
+                redirect.redirectUrl =  chrome.extension.getURL('scripts/pubads_impl_88.js');
+            }
+            return redirect;
         },
-        {urls: ["*://partner.googleadservices.com/gpt/pubads_impl_*"], types: ["script"]},
+        {urls: ["*://*.googleadservices.com/*","*://*.googletagservices.com/*","*://*/*"], types: ["script"]},
         ["blocking"]);
 }());

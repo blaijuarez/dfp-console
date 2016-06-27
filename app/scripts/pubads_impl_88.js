@@ -5902,18 +5902,29 @@
                 "GPT"), this, a), this.o.push(a))
         } else this.log.error(nb(a.getAdUnitPath()), this, a)
     };
+
+    function booleanCast(data) {
+
+        if(data=="false") {
+            data = false;
+        }else if(data) {
+            data = true;
+        }
+        return data;
+    }
+
     var dm = function (a, b) {
         if (a.j && null == a.j.addSlot(b))return a.log.error(Vb(b.getAdUnitPath()), a, b), !1;
         for (var c = b.getAttributeKeys(), d = 0; d < c.length; ++d)c[d] in Tl ? a.j.addAdSenseSlotAttribute(b, Tl[c[d]], String(b.get(c[d]))) : a.log.j(pb(String(c[d]), String(b.get(c[d])), b.getAdUnitPath()), a, b);
         return !0
     }, bm = function (a) {
         if (!a.X && a.j) {
-            var dfpEnabled = window.localStorage.getItem("dfp_extensionEnabled");
-            var disableInitialLoad = window.localStorage.getItem("dfp_disableInitialLoad");
-            var singleRequest = window.localStorage.getItem("dfp_singleRequest");
-            var asyncRendering = window.localStorage.getItem("dfp_asyncRendering");
+            var dfpEnabled = booleanCast(window.localStorage.getItem("dfp_extensionEnabled"));
+            var disableInitialLoad = booleanCast(window.localStorage.getItem("dfp_disableInitialLoad"));
+            var singleRequest = booleanCast(window.localStorage.getItem("dfp_singleRequest"));
+            var asyncRendering = booleanCast(window.localStorage.getItem("dfp_asyncRendering"));
 
-            if (dfpEnabled !== "false") {
+            if (dfpEnabled) {
                 if (disableInitialLoad !== null) {
                     a.U = disableInitialLoad;
                 }
