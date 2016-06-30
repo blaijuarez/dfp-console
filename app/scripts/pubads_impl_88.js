@@ -4696,6 +4696,10 @@
     Fk.prototype.W = function () {
     };
     var Hk = function (a, b, c, d) {
+
+        window.DFPConsole.tartTime = performance.now();
+        window.DFPConsole.ts_startTime = Date.now();
+
         var e = new hj;
         e.G = "json_html";
         e.o = a.D(a.j);
@@ -6759,9 +6763,17 @@
                 return;
             }
             var idSlot = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5),
+                controlSlot = true,
                 regTime = null;
             for(var key in slot.w) {
-                if(/^(p|pos|slot)$/.test(key)) idSlot = slot.w[key][0];
+                if(/^(p|pos|slot)$/.test(key)) {
+                    controlSlot = false;
+                    idSlot = slot.w[key][0];
+                }
+            }
+
+            if(controlSlot) {
+                idSlot = (slot.G).split("/").pop();
             }
 
             if(!(idSlot in window.DFPConsole.slots)) window.DFPConsole.slots[idSlot]={};
