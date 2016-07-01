@@ -24,12 +24,10 @@
             var output = [];
 
             for(var k in data.slots) {
-                var endTime = data.slots[k].ts_rendered ? data.slots[k].ts_rendered : data.slots[k].ts_renderEnded;
-                var starTime = data.slots[k].ts_fetchStarted;
+                var endTime = data.slots[k].rendered ? data.slots[k].rendered : data.slots[k].renderEnded;
+                var starTime = data.slots[k].fetchStarted;
 
                 if(starTime==undefined || endTime==undefined) continue;
-
-                console.log(starTime,endTime);
 
                 var slot = {label:"["+k+"]", priority:"others", times: [{"label": k,"starting_time": starTime, "ending_time": endTime}]};
 
@@ -46,11 +44,13 @@
 
             var width = 950;
             var chart = d3.timeline()
+                    .beginning(data.startTime)
+                    .ending(data.endTime)
                     .tickFormat({
-                        format: d3.time.format("%S s"),
-                        tickTime: d3.time.seconds,
+                        format: d3.time.format("%S,%Ls"),
+                        tickTime: d3.time.milliseconds,
                         tickInterval: 1,
-                        tickSize: 1
+                        tickSize: 6
                     })
                 .showBorderLine()
                 .colors( colorScale )
@@ -59,8 +59,14 @@
                 .stack()
                 .background("#eaeaea")
                 .margin({left: 150, right: 0, top: 0, bottom: 0});
-            var svg = d3.select("#timeline").append("svg").attr("width", width)
+            var svg = d3.select("#timeline")
+                .append("svg")
+                .attr("width", width)
                 .datum(parserData(data) ).call(chart);
+
+
+            console.log(data);
+
         }
         renderTimeline();
     };
