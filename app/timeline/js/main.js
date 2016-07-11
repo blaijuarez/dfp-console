@@ -1,6 +1,8 @@
 (function() {
     "use_strict";
     window.onload = function () {
+
+        var marginLeft = 0;
         
         document.getElementById("portal").innerHTML = getUrlVars("p");
 
@@ -24,15 +26,25 @@
             var output = [];
 
             for(var k in data.slots) {
-                var endTime = data.slots[k].rendered ? data.slots[k].rendered : data.slots[k].renderEnded;
-                var starTime = data.slots[k].fetchStarted;
+
+
+                var starTime = data.slots[k]["gpt-slot_fetch"],
+                    endTime = data.slots[k]["gpt-slot_rendered_load"] ?
+                        data.slots[k]["gpt-slot_rendered_load"] : data.slots[k]["gpt-slot_rendered"],
+                    id = data.slots[k].id,
+                    pos = data.slots[k].pos;
 
                 if(starTime==undefined || endTime==undefined) continue;
 
-                var slot = {label:"["+k+"]", priority:"others", times: [{"label": k,"starting_time": starTime, "ending_time": endTime}]};
+                var slot = {label:"["+id+"]", priority:"others", times: [{"label": pos,"starting_time": starTime, "ending_time": endTime}]};
 
-                if(/^(f|m|r|si|sd)$/.test(k)) {
+                if(/^(f|m|r|si|sd)$/.test(pos)) {
                     slot.priority = "aboutDefault";
+                }
+
+                if(marginLeft<id.length) {
+
+                    marginLeft = id.length;
                 }
 
                 output.push(slot);
@@ -43,9 +55,13 @@
         function renderTimeline() {
 
             var width = 950;
+            var obj = parserData(data);
+            var left = Math.round(marginLeft/0.7 * 5);
+
+            console.log(left,marginLeft);
+
             var chart = d3.timeline()
-                    .beginning(data.startTime)
-                    .ending(data.endTime)
+                    .beginning(1)
                     .tickFormat({
                         format: d3.time.format("%S,%Ls"),
                         tickTime: d3.time.milliseconds,
@@ -58,14 +74,14 @@
                 
                 .stack()
                 .background("#eaeaea")
-                .margin({left: 150, right: 0, top: 0, bottom: 0});
+                .margin({left: left, right: 0, top: 0, bottom: 0});
             var svg = d3.select("#timeline")
                 .append("svg")
                 .attr("width", width)
-                .datum(parserData(data) ).call(chart);
+                .datum(obj).call(chart);
 
 
-            console.log(data);
+            //console.log(data);
 
         }
         renderTimeline();
