@@ -78,7 +78,6 @@
     var DFPForceConsole = function () {
         setTimeout(function() {
             if (DFPConsoleObject && !DFPConsoleObject.ready) {
-                console.log( "DFPForceConsole" );
                 DFPComunicator("send", "dfpShowConsole", "*");
             }
         },5000);
