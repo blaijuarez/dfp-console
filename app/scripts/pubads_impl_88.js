@@ -2,8 +2,11 @@
 
     var window = this, document = this.document;
 
-    window.DFPConsole = {"slots":{},"startTime":performance.now(),"ts_startTime":Date.now()};
-    var loadDFPConsole = setInterval(function() {console.info("Cargando DFP Console...")},1000),
+    window["DFPConsole"] = window["DFPConsole"] || {};
+    window["DFPConsole"].slots = window["DFPConsole"].slots || {};
+
+    var loadDFPConsole = null,
+
         k, n = this, r = function (a) {
             return void 0 !== a
         }, aa = function () {
@@ -122,6 +125,7 @@
     oa.prototype.toString = function () {
         var a = this.l.toTimeString() + ": " + pa[this.m] + ": " + this.o;
         this.j && (a += " Duration: " + (this.l.getTime() - this.j.getTimestamp().getTime()) + "ms.");
+
         return a
     };
     var qa = function () {
@@ -151,6 +155,7 @@
     };
     qa.prototype.log = function (a, b, c, d, e) {
         a = new oa(a, b, c, d, e);
+
         this.l.push(a);
         return a
     };
@@ -189,7 +194,7 @@
                     return v(a) ? "'" + a + "'" : t(a) ? wa(a) : String(a)
                 }).join(", ") + "]"
         }, xa = B(1), ya = C(2), za = C(3), Aa = C(4), Ba = C(5), Ca = C(6), Da = B(8), Ea = ua(9), Fa = ua(10), Ga = D(12), Ha = C(13), Ia = C(14), Ja = B(16), Ka = ua(17), La = B(19), Ma = C(20), Na = C(21), Oa = D(22), Pa =
-            D(23), Qa = C(26), Ra = C(27), Sa = C(28), Ta = C(30), Ua = D(31), Va = B(34), Wa = C(35), Xa = ua(36), Ya = ua(37), Za = B(38), $a = C(39), ab = D(40), bb = B(42), cb = D(43), db = B(44), eb = B(45), fb = C(46), gb = C(47), hb = C(48), ib = B(49), jb = B(50), kb = B(52), lb = D(53), mb = D(54), nb = C(55), ob = D(57), pb = ua(58), qb = C(59), rb = C(60), sb = D(61), tb = D(62), ub = C(63), vb = D(64), wb = C(65), xb = B(66), yb = B(67), zb = B(68), Ab = B(69), Bb = B(70), Cb = B(71), Db = B(72), Eb = C(74), Fb = C(75), Gb = ua(77), Hb = C(78), Ib = B(79), Jb = C(80), Kb = D(82), Lb = D(84), Mb = C(85), Nb = B(87), Ob = ua(88), Pb = C(90), Qb = C(92), Rb = C(93),
+            D(23), Qa = C(26), Ra = C(27), Sa = C(28), Ta = C(30), Ua = D(31), Va = B(34), Wa = C(35), Xa = ua(36), Ya = ua(37), Za = B(38), $a = C(39), ab = D(40), bb = B(42), cb = D(43), db = B(44), eb = B(45), fb = C(46), gb = C(47), hb = C(48), ib = B(49), jb = B(50), kb = B(52), lb = D(53), mb = D(54), nb = C(55), ob = D(57), pb = ua(58), qb = C(59), rb = C(60), sb = D(61), tb = D(62), ub = C(63), vb = D(64), wb = C(65), xb = B(66), yb = B(67), zb = B(68), Ab = B(69), Bb = B(70), Cb = B(71), Db = B(72), Eb = C(74), Fb = C(75), Gb = ua(77), Hb = C(78), Ib = B(79), Jb = C(80), Kb = D(82), Lb = D(84), Mb = C(85), Nb = B(87), Ob = ua(88), Pb = C(90), Qb = C(92), Rb = C(93), Zr = C(110),
         Sb = C(94), Tb = C(95), F = function (a, b) {
             var c = wa(b), c = c.substring(1, c.length - 1);
             return new na(96, [a, c])
@@ -1014,9 +1019,7 @@
     }, Ee = function () {
         var a = De();
         "google_onload_fired" in a || (a.google_onload_fired = !1, nd(a, "load", function () {
-
-            DFPConsoleLog("finish");
-
+            DFPConsoleLog();
             a.google_onload_fired = !0
         }))
     }, Fe = function (a, b) {
@@ -1831,6 +1834,9 @@
     };
     Fg.prototype.push = function (a) {
         try {
+
+            DFPConsoleInit();
+
             for (var b = sa(), c = 0; c < arguments.length; ++c)try {
                 ea(arguments[c]) && (arguments[c](), this.j++)
             } catch (d) {
@@ -2646,9 +2652,10 @@
     };
     var Eh = function (a, b, c) {
         b = a.B[b];
+
         t(b) && G(b, function (a) {
             try {
-                a(c)
+                a(c);
             } catch (b) {
                 a = b && v(b.name) ? b.name : null;
                 var e = b && v(b.message) ? b.message : null, f = "";
@@ -2729,16 +2736,18 @@
     }, Sh = function (a, b, c, d) {
         a.l || (a.l = new n.GPT_jstiming.Timer(a.A), a.l.name = "global");
         var e = "_" == b[0];
-        if (c || e || window.performance && window.performance.timing)a.l.tick(b, c, d), e || (a.I = !0);
-        a.J || Qh(a)
+        if (c || e || window.performance && window.performance.timing) {
+            a.l.tick(b, c, d), e || (a.I = !0);
+        }
+        a.J || Qh(a);
+
     }, Th = function (a, b, c, d, e) {
         c ? a.o || (a.o = new n.GPT_jstiming.Timer(a.A), a.o.name = "ad_events_psbk") : a.m || (a.m = new n.GPT_jstiming.Timer(a.A), a.m.name = "ad_events");
         var f = "_" == b.charAt(0);
         c ? (a.o.tick(b, d, e), f || (a.K = !0)) : (a.m.tick(b, d, e), f || (a.G = !0))
     }, Ph = function (a, b, c) {
         try {
-            a.u && (Sh(a, b, Hh[b],
-                c), a.j[b] = !0)
+            a.u && (Sh(a, b, Hh[b],c), a.j[b] = !0);
         } catch (d) {
             O(2601, d)
         }
@@ -2746,7 +2755,7 @@
         try {
             if (a.u) {
                 var d = "_" + b;
-                d && (Sh(a, d, void 0, 0), Sh(a, b, d, c))
+                d && (Sh(a, d, void 0, 0), Sh(a, b, d, c));
             }
         } catch (e) {
             O(2601, e)
@@ -3255,10 +3264,6 @@
     };
     k = zi.prototype;
     k.fetchStarted = function (a) {
-
-        DFPConsoleLog("fetchStarted",this);
-        DFPConsoleLog("ts_fetchStarted",this);
-
         this.B || bi(P(), "count_of_requested_slots");
         this.B = this.j.info(za(this.getAdUnitPath()), null, this);
         this.aa = a;
@@ -3268,19 +3273,10 @@
         return this.aa
     };
     k.fetchEnded = function () {
-
-        DFPConsoleLog("fetchEnded",this);
-
         this.ba = this.j.info(Aa(this.getAdUnitPath()), null, this, this.B);
-
     };
     k.renderStarted = function () {
-
-        DFPConsoleLog("renderStarted",this);
-
         this.C = this.j.info(Ba(this.getAdUnitPath()), null, this);
-
-
     };
     k.getResponseInformation = function () {
         return this.I
@@ -3289,16 +3285,14 @@
         a.isEmpty ? this.I = null : this.I = new vh(a.advertiserId, a.campaignId, a.creativeId, a.labelIds, a.lineItemId);
         this.va || bi(P(), "count_of_rendered_slots");
         this.va = this.j.info(Ca(this.getAdUnitPath()), null, this, this.C);
+
         G(this.u, function (b) {
+
             if (b.getName() == a.serviceName) {
                 var c;
                 if (c = !a.slotContentChanged)c = b.B.slotRenderEnded, c = !!c && 0 < c.length;
                 c && (c = new xg("slot_render_ended_false_positive"), Bg(c), Ag(c));
                 Eh(b, "slotRenderEnded", a);
-
-                DFPConsoleLog("renderEnded", a.slot);
-                DFPConsoleLog("ts_renderEnded", a.slot);
-
             }
         })
     };
@@ -5005,6 +4999,7 @@
             }
         } else uk(c)
     }, jl = function (a, b) {
+
         var c = document, d = Bi(b);
         if (0 != d.length) {
             var e = d[0];
@@ -5023,15 +5018,11 @@
                 f.appendChild(g);
                 f = wk(g, d, yk, !1, e, c);
                 nd(f, "load", function () {
-
-                    var ts = Date.now();
-
-                    DFPConsoleLog("rendered",b);
-                    DFPConsoleLog("ts_rendered",b);
-
+                    b.Zr = b.j.info(Zr(b.getAdUnitPath()), null, b);
                     b.C && gi(P(), b.A, b.l);
                 })
             }
+
             dj(a.F, b, f)
         }
     }, bl = function (a, b, c) {
@@ -5902,18 +5893,29 @@
                 "GPT"), this, a), this.o.push(a))
         } else this.log.error(nb(a.getAdUnitPath()), this, a)
     };
+
+    function booleanCast(data) {
+
+        if(data=="false") {
+            data = false;
+        }else if(data) {
+            data = true;
+        }
+        return data;
+    }
+
     var dm = function (a, b) {
         if (a.j && null == a.j.addSlot(b))return a.log.error(Vb(b.getAdUnitPath()), a, b), !1;
         for (var c = b.getAttributeKeys(), d = 0; d < c.length; ++d)c[d] in Tl ? a.j.addAdSenseSlotAttribute(b, Tl[c[d]], String(b.get(c[d]))) : a.log.j(pb(String(c[d]), String(b.get(c[d])), b.getAdUnitPath()), a, b);
         return !0
     }, bm = function (a) {
         if (!a.X && a.j) {
-            var dfpEnabled = window.localStorage.getItem("dfp_extensionEnabled");
-            var disableInitialLoad = window.localStorage.getItem("dfp_disableInitialLoad");
-            var singleRequest = window.localStorage.getItem("dfp_singleRequest");
-            var asyncRendering = window.localStorage.getItem("dfp_asyncRendering");
+            var dfpEnabled = booleanCast(window.localStorage.getItem("dfp_extensionEnabled"));
+            var disableInitialLoad = booleanCast(window.localStorage.getItem("dfp_disableInitialLoad"));
+            var singleRequest = booleanCast(window.localStorage.getItem("dfp_singleRequest"));
+            var asyncRendering = booleanCast(window.localStorage.getItem("dfp_asyncRendering"));
 
-            if (dfpEnabled !== "false") {
+            if (dfpEnabled) {
                 if (disableInitialLoad !== null) {
                     a.U = disableInitialLoad;
                 }
@@ -6739,53 +6741,122 @@
             })
         },
 
-        DFPConsoleLog = function (action,slot) {
-            if(action==="finish") {
-                loadDFPConsole && clearInterval(loadDFPConsole);
-                window.DFPConsole["endTime"]=performance.now();
-                window.DFPConsole["ts_endTime"]=Date.now();
-                window.postMessage("dfpStream"+JSON.stringify(window.DFPConsole), "*");
-                return;
-            }
-            var idSlot = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5),
-                regTime = null;
-            for(var key in slot.w) {
-                if(/^(p|pos|slot)$/.test(key)) idSlot = slot.w[key][0];
+        DFPConsoleLog = function () {
+
+            if(window["DFPConsole"].ready) return;
+
+            loadDFPConsole && clearInterval(loadDFPConsole);
+            loadDFPConsole = null;
+
+            var gTags = ka(),
+                pAds = Ah(),
+                slots = pAds.getSlots(),
+                offsetTime = window["DFPConsole"].offsetTime || 0,
+                matchCode = {
+                    8:      "gpt-google_js_loaded",
+                    46:     "gpt-gpt_fetch",
+                    48:     "gpt-gpt_fetched",
+                    1:      "gpt-page_load_complete",
+                    31:     "gpt-queue_start",
+                    40:     "gpt-service_add_slot",
+                    88:     "gpt-service_add_targeting",
+                    78:     "gpt-service_collapse_containers_enable",
+                    35:     "gpt-service_create",
+                    63:     "gpt-service_single_request_mode_enable",
+                    2:      "gpt-slot_create",
+                    17:     "gpt-slot_add_targeting",
+                    50:     "gpt-slot_fill",
+                    3:      "gpt-slot_fetch",
+                    4:      "gpt-slot_receiving",
+                    53:     "gpt-slot_render_delay",
+                    5:      "gpt-slot_rendering",
+                    6:      "gpt-slot_rendered",
+                    110:    "gpt-slot_rendered_load"
+                };
+
+            for (var key in slots) {
+
+                var slot = slots[key];
+
+                if (typeof slot === 'function') continue;
+
+                var slotId = slot.getSlotId && slot.getSlotId();
+                var rand = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+                var id = slotId ? slotId.getId() : rand;
+
+                if(window["DFPConsole"].slots[id] && window["DFPConsole"].slots[id]["fix"]) continue;
+
+                window["DFPConsole"].slots[id] = window["DFPConsole"].slots[id] ||
+                {
+                    id: slotId.getDomId(),
+                    pos: slot.getTargeting(slot.getTargetingKeys()[0])[0],
+                    fix: true
+                };
+
+                gTags.debug_log.getEventsBySlot(slot).map(function (eventSlot) {
+                    var time = (new Date(eventSlot.l).getTime()) - performance.timing.navigationStart;
+                    window["DFPConsole"].slots[id][matchCode[eventSlot.getMessage().getMessageId()]] = Math.abs(time - offsetTime);
+                });
             }
 
-            if(!(idSlot in window.DFPConsole.slots)) window.DFPConsole.slots[idSlot]={};
-            window.DFPConsole.slots[idSlot]["id"] = slot.m.o;
+            setTimeout(function(){
+                window["DFPConsole"]["endTime"] = performance.timing.loadEventEnd - performance.timing.navigationStart;
+                window["DFPConsole"]["startTime"] = performance.timing.domInteractive - performance.timing.navigationStart;
+                window.postMessage("dfpStream" + JSON.stringify(window["DFPConsole"]), "*");
+            },1000);
 
-            regTime = /^ts_(fetchStarted|rendered|renderEnded)$/.test(action) ? Date.now() : window.performance.now();
-            window.DFPConsole.slots[idSlot][action] = regTime;
+            window["DFPConsole"].ready=true;
+
+            return window["DFPConsole"];
         };
+
+    function DFPConsoleInit() {
+
+        if (!loadDFPConsole) loadDFPConsole = setInterval(function () {
+            console.info("Cargando DFP Console...")
+        }, 1000);
+
+        if( window["DFPConsole"]) {
+            window["DFPConsole"].ready = null;
+            window["DFPConsole"].offsetTime = window["DFPConsole"].offsetTime || 0;
+
+            var navStart = performance.timing.navigationStart,
+                aux = Date.now() - navStart,
+                delay = 5000,
+                diff = aux - window["DFPConsole"].offsetTime;
+            if (diff > delay) {
+                window["DFPConsole"].offsetTime = aux;
+            }
+        }else{
+            window["DFPConsole"] = {};
+            DFPConsoleInit();
+        }
+    }
+
+    function resetSlotFix() {
+        for(var key in window["DFPConsole"].slots) {
+            window["DFPConsole"].slots[key]["fix"] = false;
+        }
+    }
 
     window.addEventListener('message', function (e) {
         var showConsole = e.data.match ? e.data.match(/^dfpShowConsole(.*)/) : null;
         var refresh = e.data.match ? e.data.match(/^dfpRefreshAds(.*)/) : null;
         var reload = e.data.match ? e.data.match(/^dfpReload(.*)/) : null;
-        var m = e.data.match ? e.data.match(/^dfpForceConsole(.*)/) : null;
-        var f = e.data.match ? e.data.match(/^dfpFinishParse(.*)/) : null;
-        if(m && !window.DFPConsole["ready"]) {
-            alert("Tenemos problemas para capturar los datos de DFP. Vamos a forzar la consola.");
-            DFPConsoleLog("finish");
-            loadDFPConsole && clearInterval(loadDFPConsole);
-        }
-        if(f) {
-            var rd = JSON.parse(f[1]);
-            window.DFPConsole.slotsSort = rd;
-            window.DFPConsole["ready"]=true;
+        var parse = e.data.match ? e.data.match(/^dfpFinishParse(.*)/) : null;
+        
+        if(parse) {
+            window["DFPConsole"].slotsSort = JSON.parse(parse[1]);
         }
         if(refresh) {
-            window.DFPConsole["ready"]=null;
+            resetSlotFix(), DFPConsoleInit();
             window.googletag.pubads().refresh();
         }
         if(reload) {
             location.reload();
         }
         if(showConsole) {
-            window.DFPConsole["ready"]=true;
-            DFPConsoleLog("finish");
+            DFPConsoleLog();
         }
     });
 

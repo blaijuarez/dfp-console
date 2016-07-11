@@ -1,6 +1,6 @@
 {
   "name": "DFP Console",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "manifest_version": 2,
   "description": "Mide los tiempos de los anuncios en DFP de Google.",
   "short_name": "DFP Console",

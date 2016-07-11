@@ -17,7 +17,7 @@
 
     const modes = ["dfp_disableInitialLoad", "dfp_singleRequest", "dfp_asyncRendering", "dfp_extensionEnabled"];
     var initialData = new Prefs(),
-        p = null,
+        q = null,
         DFPObject = null,
         DFPorigin = null,
         requestQuery = function (data, callback) {
@@ -47,13 +47,13 @@
             var bReset = document.getElementById("btn_reset");
             $(bReset).prop(k,v);
         },
-        showAlerts = function (data) {
+        setDFPConsoleObject = function (data) {
             DFPObject = data.DFPConsoleObject;
             DFPorigin = data.origin;
         },
         init = function () {
-            requestQuery({from: 'popup', subject: 'getDFPConsoleObject', modes: modes}, showAlerts);
-            p = new Promise(
+            requestQuery({from: 'popup', subject: 'getDFPConsoleObject', modes: modes}, setDFPConsoleObject);
+            q = new Promise(
                 function (resolve) {
                     requestQuery({from: 'popup', subject: 'getLocalStorage', modes: modes}, allReady);
                     function allReady(s) {
@@ -64,25 +64,62 @@
             );
         };
 
-    window.onload = function () {
+    document.addEventListener("DOMContentLoaded", function() {
+
+        var formData = null,
+            bReset = document.getElementById("btn_reset"),
+            extensionEnabled = null,
+            r = document.getElementsByTagName("input"),
+            alerts = document.getElementsByClassName("alert"),
+            overlay = document.getElementById("overlay");
 
         init();
 
-        p.then(function(response) {
+        bReset.onclick = function () {
+            var value = $(this).prop("value") !=="true" ? "true" : "false",
+                sender = {"name": $(this).attr("name"), "value":value};
+            enableDisable(value);
+            requestQuery({from: 'popup', subject: 'setLocalStorage', modes: modes, data: sender}, initialData.setData);
+        };
+
+        var bRefresh = document.getElementById("btn_refresh");
+        bRefresh.onclick = function (e) {
+            requestQuery({from: 'popup', subject: 'refreshAds'}, null);
+        };
+
+        var bShow = document.getElementById("btn_show");
+        bShow.onclick = function (e) {
+            requestQuery({from: 'popup', subject: 'showConsole'}, null);
+        };
+
+        var bTimeline = document.getElementById("btn_timeline");
+        bTimeline.onclick = function (e) {
+
+            var q = new Promise(
+                function (resolve) {
+                    requestQuery({from: 'popup', subject: 'showConsole', modes: modes}, createTimeline);
+                    function createTimeline() {
+                        requestQuery({from: 'popup', subject: 'getDFPConsoleObject', modes: modes}, setDFPConsoleObject);
+                        resolve();
+                    }
+                }
+            );
+
+            q.then(function() {
+                chrome.tabs.create({ url: "../timeline/index.html?p="+DFPorigin+"&DFPObject="+encodeURI(JSON.stringify(DFPObject)) });
+            });
+        };
+
+        q.then(function(response) {
 
             if(!DFPObject) return;
-
-            var formData = response.getData(),
-                bReset = document.getElementById("btn_reset"),
-                extensionEnabled = formData["dfp_extensionEnabled"] || true,
-                r = document.getElementsByTagName("input"),
-                alerts = document.getElementsByClassName("alert"),
-                overlay = document.getElementById("overlay");
 
             alerts[0].style.display = "block";
             alerts[1].style.display = "none";
             overlay.style.display = "none";
 
+            formData = response.getData();
+            extensionEnabled = formData["dfp_extensionEnabled"] || true;
             for (var i = 0, l = r.length; i < l; i++) {
                 if (formData !== null) {
                     var state = null;
@@ -95,39 +132,19 @@
                 $("[name='"+r[i].name+"']").bootstrapToggle(state).change(function() {
                     var sender = {"name": this.name, "value": $(this).prop('checked')},
                         subject = ((/^.+disableInitialLoad$/).test(this.name) && !$(this).prop('checked')) ? "removeLocalStorage" : "setLocalStorage";
-                    requestQuery({from: 'popup', subject: subject, data: sender}, null);
+                    requestQuery({from: 'popup', subject: subject, modes: modes, data: sender}, initialData.setData);
+
+                    if(this.name=="dfp_disableInitialLoad"){
+                        if($(this).prop('checked')) {
+                            $(bRefresh).attr("disabled",false);
+                        }else{
+                            $(bRefresh).attr("disabled",true);
+                        }
+                    }
                 });
             }
-
             $(bReset).prop("value",extensionEnabled);
             enableDisable(extensionEnabled);
-
-            bReset.onclick = function () {
-                var value = $(this).prop("value") !=="true" ? "true" : "false",
-                    sender = {"name": $(this).attr("name"), "value":value};
-                enableDisable(value);
-                requestQuery({from: 'popup', subject: 'setLocalStorage', data: sender}, null);
-            };
-
-            var bRefresh = document.getElementById("btn_refresh");
-            bRefresh.onclick = function (e) {
-                requestQuery({from: 'popup', subject: 'refreshAds'}, null);
-            };
-
-            var bShow = document.getElementById("btn_show");
-            bShow.onclick = function (e) {
-                requestQuery({from: 'popup', subject: 'showConsole'}, null);
-            };
-
-            var bTimeline = document.getElementById("timeline");
-            bTimeline.onclick = function (e) {
-                chrome.tabs.create({ url: "../timeline/index.html?p="+DFPorigin+"&DFPObject="+encodeURI(JSON.stringify(DFPObject)) });
-            };
-
-            /*var bReload = document.getElementById("btn_reload");
-             bReload.onclick = function () {
-             requestQuery({from: 'popup', subject: 'reload'}, null);
-             };*/
         });
-    };
+    });
 })();
