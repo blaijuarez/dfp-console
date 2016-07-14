@@ -1,6 +1,8 @@
 (function() {
     var window = this, document = this.document;
 
+    var llega = 0;
+
     window["DFPConsole"] = window["DFPConsole"] || {};
     window["DFPConsole"].slots = window["DFPConsole"].slots || {};
 
@@ -6851,8 +6853,16 @@
 
     function DFPConsoleInit() {
 
+        var tryOn = 0;
+
         if (!loadDFPConsole) loadDFPConsole = setInterval(function () {
-            console.info("Cargando DFP Console...")
+            tryOn++;
+            console.info("Cargando DFP Console.", "pubadsReady: "+window["googletag"].pubadsReady, "apiReady: "+window["googletag"].apiReady);
+
+            if(document.readyState === 'complete' && tryOn >15) {
+                DFPConsoleLog();
+            }
+
         }, 1000);
 
         if( window["DFPConsole"]) {
@@ -6925,6 +6935,7 @@
             location.reload();
         }
         if(showConsole) {
+            window["DFPConsole"].ready=null;
             DFPConsoleLog();
         }
     });
