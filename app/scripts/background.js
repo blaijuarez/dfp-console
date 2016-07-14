@@ -2,9 +2,15 @@
     "use_strict";
 
     chrome.webRequest.onBeforeRequest.addListener(
-        function (info) {
-            return {redirectUrl: chrome.extension.getURL('scripts/pubads_impl_88.js')};
+        function (response) {
+
+            var redirect = {};
+
+            if (/^.+(gpt\/pubads_impl.+)\.js$/.test(response.url)) {
+                redirect.redirectUrl =  chrome.extension.getURL('scripts/pubads_impl_90.js');
+            }
+            return redirect;
         },
-        {urls: ["*://partner.googleadservices.com/gpt/pubads_impl_*"], types: ["script"]},
+        {urls: ["*://*.googleadservices.com/*"], types: ["script"]},
         ["blocking"]);
 }());

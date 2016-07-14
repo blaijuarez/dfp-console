@@ -20,27 +20,30 @@
 </div>
 
 <ul class="list-group">
-    <li class="list-group-item">Initial load <input type="checkbox" data-toggle="toggle" data-size="mini" data-width="60" data-style="pull-right" data-onstyle="default" data-offstyle="primary" data-on="Disable" data-off="Enable" name="disableInitialLoad"></li>
-    <li class="list-group-item">Mode request <input type="checkbox" data-toggle="toggle" data-size="mini" data-width="60" data-style="pull-right" data-offstyle="primary" data-on="Single" data-off="Multi" name="singleRequest"></li>
-    <li class="list-group-item">Rendering mode <input type="checkbox" data-toggle="toggle" data-size="mini" data-width="60" data-style="pull-right" data-offstyle="primary" data-on="Async" data-off="Sync" name="asyncRendering"></li>
+    <li class="list-group-item">disableInitialLoad <input type="checkbox" data-toggle="toggle" data-size="mini" data-width="60" data-style="pull-right" data-onstyle="primary" data-offstyle="default" data-on="Enable" data-off="Disable" name="dfp_disableInitialLoad"></li>
+    <li class="list-group-item">Mode request <input type="checkbox" data-toggle="toggle" data-size="mini" data-width="60" data-style="pull-right" data-offstyle="primary" data-on="Single" data-off="Multi" name="dfp_singleRequest"></li>
+    <li class="list-group-item">Rendering mode <input type="checkbox" data-toggle="toggle" data-size="mini" data-width="60" data-style="pull-right" data-offstyle="primary" data-on="Async" data-off="Sync" name="dfp_asyncRendering"></li>
 </ul>
 
 <div id="overlay" class="overlay"></div>
 
 <div class="btn-group" role="group">
-    <button type="button" class="btn btn-default" id="btn_reset">
+    <!--button type="button" class="btn btn-default" id="btn_reset">
         <span class="glyphicon glyphicon-trash" aria-hidden="true"><b>Reset</b></span>
-    </button>
-    <!--button type="button" class="btn btn-default btn-xs" id="btn_reload">
-        <span class="glyphicon glyphicon-align-left" aria-hidden="true">Reload page</span>
     </button-->
+    <button type="button" class="btn btn-default" id="btn_show">
+        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"><b>DFPConsole</b></span>
+    </button>
     <button type="button" class="btn btn-default" id="btn_refresh">
         <span class="glyphicon glyphicon-refresh" aria-hidden="true"><b>Refresh ads</b></span>
     </button>
-    <button type="button" class="btn btn-default" id="btn_show">
-        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"><b>Show Console</b></span>
+    <button type="button" class="btn btn-default" id="btn_timeline">
+        <span class="glyphicon glyphicon-stats" aria-hidden="true"><b>Stats</b></span>
     </button>
+</div>
 
+<div class="pull-right" style="margin-top: 10px;">
+    <div id="btn_reset" name="dfp_extensionEnabled" class="cursor btn alert-default btn-sm pull-left glyphicon glyphicon-off"> </div>
 </div>
 
 <script type="text/javascript" src="js/jquery.min.js"></script>
