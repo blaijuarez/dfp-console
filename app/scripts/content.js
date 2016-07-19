@@ -56,18 +56,31 @@
 
     window.addEventListener('message', function (e) {
         var m = e.data.match ? e.data.match(/^dfpStream(.*)/) : null;
-        m && DFPOutput(parserDFPConsole(m[1]));
+        if(!m) return;
+
+        var data = parserDFPConsole(m[1]);
+        var q = new Promise(
+            function(resolve) {
+                DFPComunicator("send", "dfpFinishParse"+JSON.stringify(data.slotsSort), "*");
+                resolve(data);
+            }
+        );
+
+        q.then(function(response) {
+            DFPOutput(response);
+        });
+
     });
 
     var parserDFPConsole = function(data) {
         var output = JSON.parse(data);
         output.slotsSort = Object.keys(output.slots).sort(function(a, b) {
             var ar, br;
-            ar = output.slots[a].rendered ? output.slots[a].rendered : output.slots[a].renderEnded;
-            br = output.slots[b].rendered ? output.slots[b].rendered : output.slots[b].renderEnded;
+            ar = output.slots[a]["gpt-slot_rendered_load"] ? output.slots[a]["gpt-slot_rendered_load"] : output.slots[a]["gpt-slot_rendered"];
+            br = output.slots[b]["gpt-slot_rendered_load"] ? output.slots[b]["gpt-slot_rendered_load"] : output.slots[b]["gpt-slot_rendered"];
+
             return (ar - br);
         });
-        DFPComunicator("send", "dfpFinishParse"+JSON.stringify(output.slotsSort), "*");
         return output;
     };
 

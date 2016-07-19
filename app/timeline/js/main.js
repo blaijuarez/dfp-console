@@ -25,8 +25,8 @@
 
             var output = [];
 
-            for(var k in data.slots) {
-
+            for (var i=0,l=data.slotsSort.length;i<l;i++) {
+                var k = data.slotsSort[i];
 
                 var starTime = data.slots[k]["gpt-slot_fetch"],
                     endTime = data.slots[k]["gpt-slot_rendered_load"] ?
