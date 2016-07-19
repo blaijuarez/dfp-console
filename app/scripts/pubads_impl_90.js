@@ -6919,9 +6919,9 @@
     }
 
     window.addEventListener('message', function (e) {
-        var showConsole = e.data.match ? e.data.match(/^dfpShowConsole(.*)/) : null;
-        var refresh = e.data.match ? e.data.match(/^dfpRefreshAds(.*)/) : null;
-        var reload = e.data.match ? e.data.match(/^dfpReload(.*)/) : null;
+        var showConsole = e.data.match ? e.data.match(/^dfpShowConsole$/) : null;
+        var refresh = e.data.match ? e.data.match(/^dfpRefreshAds$/) : null;
+        var reload = e.data.match ? e.data.match(/^dfpReload$/) : null;
         var parse = e.data.match ? e.data.match(/^dfpFinishParse(.*)/) : null;
 
         if(parse) {
