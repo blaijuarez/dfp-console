@@ -17,6 +17,8 @@
   },
 
   "permissions": [
+    "browsingData",
+    "cookies",
     "tabs",
     "activeTab",
     "background",

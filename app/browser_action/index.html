@@ -19,18 +19,15 @@
     <strong>Un momento!</strong> Se está cargando la configuración.
 </div>
 
-<ul class="list-group">
-    <li class="list-group-item">disableInitialLoad <input type="checkbox" data-toggle="toggle" data-size="mini" data-width="60" data-style="pull-right" data-onstyle="primary" data-offstyle="default" data-on="Enable" data-off="Disable" name="dfp_disableInitialLoad"></li>
-    <li class="list-group-item">Mode request <input type="checkbox" data-toggle="toggle" data-size="mini" data-width="60" data-style="pull-right" data-offstyle="primary" data-on="Single" data-off="Multi" name="dfp_singleRequest"></li>
-    <li class="list-group-item">Rendering mode <input type="checkbox" data-toggle="toggle" data-size="mini" data-width="60" data-style="pull-right" data-offstyle="primary" data-on="Async" data-off="Sync" name="dfp_asyncRendering"></li>
+<ul class="list-group dfp_config">
+    <li class="list-group-item">disableInitialLoad <input type="checkbox" data-toggle="toggle" data-size="mini" data-width="60" data-style="pull-right" data-onstyle="primary" data-offstyle="default" data-on="Enable" data-off="Disable" name="dfp_disable_initial_load"></li>
+    <li class="list-group-item">Mode request <input type="checkbox" data-toggle="toggle" data-size="mini" data-width="60" data-style="pull-right" data-offstyle="primary" data-on="Single" data-off="Multi" name="dfp_single_request"></li>
+    <li class="list-group-item">Rendering mode <input type="checkbox" data-toggle="toggle" data-size="mini" data-width="60" data-style="pull-right" data-offstyle="primary" data-on="Async" data-off="Sync" name="dfp_async_rendering"></li>
 </ul>
 
 <div id="overlay" class="overlay"></div>
 
 <div class="btn-group" role="group">
-    <!--button type="button" class="btn btn-default" id="btn_reset">
-        <span class="glyphicon glyphicon-trash" aria-hidden="true"><b>Reset</b></span>
-    </button-->
     <button type="button" class="btn btn-default" id="btn_show">
         <span class="glyphicon glyphicon-eye-open" aria-hidden="true"><b>DFPConsole</b></span>
     </button>
@@ -42,8 +39,31 @@
     </button>
 </div>
 
+<section class="logMode panel panel-default">
+    <div class="panel-body">
+        <div class="form-group col-xs-10">
+            <label for="numLogMode">Número de registros</label>
+            <textarea id="numLogMode" placeholder="Default 10"></textarea>
+        </div>
+        <button id="btn_logMode" type="submit" class="col-xs-2 btn btn-primary">Go!</button>
+    </div>
+    <hr/>
+    <div class="panel-body">
+        <a href="#" id="btn_delete_data"><span class="glyphicon glyphicon-trash" aria-hidden="true"><b>Borrar datos almacenados</b></span></a>
+        <a href="#" id="btn_show_data"><span class="glyphicon glyphicon-stats" aria-hidden="true"><b>Mostrar datos almacenados</b></span></a>
+
+        <div id="confirmMsg" class="confirmMsg alert alert-danger">
+        <span><b>¿Quieres eliminar los datos?</b></span>
+        <span id="btn_cancel_delete" class="glyphicon glyphicon-thumbs-down cursor btn btn-c alert-default btn-sm" aria-hidden="true"></span>
+        <span id="btn_confirm_delete" class="glyphicon glyphicon-thumbs-up cursor btn btn-c alert-default btn-sm" aria-hidden="true"></span>
+        </div>
+
+    </div>
+</section>
+
 <div class="pull-right" style="margin-top: 10px;">
-    <div id="btn_reset" name="dfp_extensionEnabled" class="cursor btn alert-default btn-sm pull-left glyphicon glyphicon-off"> </div>
+    <div id="dfp_log_mode" name="dfp_log_mode" class="cursor btn alert-default btn-sm pull-left glyphicon glyphicon-file"></div>
+    <div id="btn_reset" name="dfp_extension_disabled" class="cursor btn alert-default btn-sm pull-left glyphicon glyphicon-off"> </div>
 </div>
 
 <script type="text/javascript" src="js/jquery.min.js"></script>
