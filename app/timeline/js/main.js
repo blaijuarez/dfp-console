@@ -1,5 +1,5 @@
 (function() {
-    "use_strict";
+    "use strict";
     window.onload = function () {
 
         var marginLeft = 0;

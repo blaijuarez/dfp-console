@@ -1,8 +1,10 @@
 (function() {
-    "use_strict";
+    "use strict";
 
     var DFPConsoleObject = null;
-    
+    var storageAPI = window["storageAPI"] || {};
+    var DBConfig = window["DBConfig"] || {};
+
     chrome.runtime.onMessage.addListener(function (msg, sender, response) {
 
         if (msg.from === 'popup') {
@@ -29,28 +31,37 @@
                     response({DFPConsoleObject:DFPConsoleObject,origin:document.origin});
                     response = null;
                     break;
+                case "removeAllLogs":
+                    DFPComunicator("send", "removeAllLogs", "*");
+                    break;
+                case "reloadPage":
+                    location.reload();
+                    break;
+                case "showReportDB":
+                    DFPComunicator("send", "getAllLogs", "*");
+                    break;
             }
 
             if(response) {
                 var dataStorage = returnLocalStorage(msg.modes);
                 response(dataStorage);
             }
+        }
 
-            function returnLocalStorage(data) {
+        function returnLocalStorage(data) {
 
-                if(!data){
-                    return null
-                }
-
-                var dataStorage = {};
-                for (var i = 0, l = data.length; i < l; i++) {
-                    var ls = window.localStorage.getItem(data[i]);
-                    if (ls) {
-                        dataStorage[data[i]] = ls;
-                    }
-                }
-                return dataStorage;
+            if(!data){
+                return null
             }
+
+            var dataStorage = {};
+            for (var i = 0, l = data.length; i < l; i++) {
+                var ls = window.localStorage.getItem(data[i]);
+                if (ls) {
+                    dataStorage[data[i]] = ls;
+                }
+            }
+            return dataStorage;
         }
     });
 
@@ -86,18 +97,6 @@
 
     var DFPComunicator = function(action, data, domine) {
         window.postMessage(data, domine);
-    };
-
-    var DFPForceConsole = function () {
-        setTimeout(function() {
-            if (DFPConsoleObject && !DFPConsoleObject.ready) {
-                DFPComunicator("send", "dfpShowConsole", "*");
-            }
-        },5000);
-    };
-
-    window.onload = function () {
-        DFPForceConsole();
     };
 
     var DFPOutput = function (output) {
@@ -167,4 +166,29 @@
             "border:none; background: #fff; font-weight:bold;color:#ddd",
             "border: 1px solid rgb(255, 204, 52);background-color: rgb(247, 248, 224);padding:1px 8px;");
     };
+
+    var DFPForceConsole = function () {
+        setTimeout(function() {
+            if (DFPConsoleObject && !DFPConsoleObject.ready) {
+                DFPComunicator("send", "dfpShowConsole", "*");
+            }
+        },5000);
+    };
+
+    var DFPLogMode = function () {
+        //chrome.runtime.sendMessage({action: "removeUserBrowserData"}, null);
+        (function injector(libs) {
+            var s = document.createElement('script');
+            s.src = chrome.extension.getURL(libs.shift());
+            s.onload = function() {libs.length>0 && injector(libs)};
+            (document.head || document.documentElement).appendChild(s);
+        }(['scripts/storageAPI.js','scripts/metrics.js']));
+    };
+
+    window.onload = function () {
+        DFPForceConsole();
+        var logMode = window.localStorage.getItem("dfp_log_mode");
+        logMode && logMode !== "false" && DFPLogMode();
+    };
+
 }());

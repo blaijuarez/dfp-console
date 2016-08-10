@@ -6871,7 +6871,7 @@
 
             var navStart = performance.timing.navigationStart,
                 aux = Date.now() - navStart,
-                delay = 5000,
+                delay = 10000,
                 diff = aux - window["DFPConsole"].offsetTime;
             if (diff > delay) {
                 window["DFPConsole"].offsetTime = aux;
@@ -6883,12 +6883,12 @@
     }
 
     function DFPCheckParameters(a) {
-        var dfpEnabled = booleanCast(window.localStorage.getItem("dfp_extensionEnabled"));
-        var disableInitialLoad = booleanCast(window.localStorage.getItem("dfp_disableInitialLoad"));
-        var singleRequest = booleanCast(window.localStorage.getItem("dfp_singleRequest"));
-        var asyncRendering = booleanCast(window.localStorage.getItem("dfp_asyncRendering"));
+        var dfpEnabled = booleanCast(window.localStorage.getItem("dfp_extension_disabled"));
+        var disableInitialLoad = booleanCast(window.localStorage.getItem("dfp_disable_initial_load"));
+        var singleRequest = booleanCast(window.localStorage.getItem("dfp_single_request"));
+        var asyncRendering = booleanCast(window.localStorage.getItem("dfp_async_rendering"));
 
-        if (dfpEnabled) {
+        if (!dfpEnabled) {
             if (disableInitialLoad !== null) {
                 a.U = disableInitialLoad;
             }
@@ -6903,13 +6903,7 @@
     }
 
     function booleanCast(data) {
-
-        if(data=="false") {
-            data = false;
-        }else if(data) {
-            data = true;
-        }
-        return data;
+        return data == "false" ? false : true;
     }
 
     function resetSlotFix() {
@@ -6926,6 +6920,7 @@
 
         if(parse) {
             window["DFPConsole"].slotsSort = JSON.parse(parse[1]);
+            window["DFPConsole"].parser = true;
         }
         if(refresh) {
             resetSlotFix(), DFPConsoleInit();
