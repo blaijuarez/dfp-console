@@ -7,7 +7,22 @@
         key: "htmlResponse",
         maxReload: parseInt(window.localStorage.getItem("dfp_num_log_mode")) || 10
     };
+
     var metricas = {},
+        optionsDB = {
+            regenerate: true,
+            indexedDB: {
+                databaseName: DBConfig.db,
+                databaseVersion: 1,
+                objectStoreData: {
+                    name: DBConfig.table,
+                    keyPath: null,
+                    autoIncrement: true
+                },
+                objectStoreIndexDataArray: [],
+                closeConnection: false
+            }
+        },
         registrarMetricas = function () {
 
             var t = performance.timing,
@@ -19,9 +34,9 @@
                 metricas.pageEnd = t.loadEventEnd - t.navigationStart;
 
             try {
-                for (var i = 0, l = DFPConsole.slotsSort.length; i < l; i++) {
-                    var key = DFPConsole.slotsSort[i];
-                    var rendered = DFPConsole.slots[key]["gpt-slot_rendered_load"] ? Math.round(DFPConsole.slots[key]["gpt-slot_rendered_load"]) : Math.round(DFPConsole.slots[key]["gpt-slot_rendered"]);
+                for (var i = 0, l = window["DFPConsole"].slotsSort.length; i < l; i++) {
+                    var key = window["DFPConsole"].slotsSort[i];
+                    var rendered = window["DFPConsole"].slots[key]["gpt-slot_rendered_load"] ? Math.round(window["DFPConsole"].slots[key]["gpt-slot_rendered_load"]) : Math.round(window["DFPConsole"].slots[key]["gpt-slot_rendered"]);
                     if (key == "m" || key == "si" || key == "sd" || key == "r") {
                         if (onlyOne) {
                             onlyOne = false;
@@ -30,46 +45,50 @@
                             metricas.LastKeyAdRendered = rendered;
                         }
                     }
-                    if (i === Object.keys(DFPConsole.slots).length - 1) {
+                    if (i === Object.keys(window["DFPConsole"].slots).length - 1) {
                         metricas.lastAdRendered = rendered;
                     }
                 }
 
-                initStorageLog(function() {
+                openStorage(function() {
                     getAllStorage(function (a) {
                         if (a.indexedDB && (DBConfig.maxReload > a.indexedDB.length)) {
-                            setStorage(function () {
+                            setStorage({value: metricas}, function (success, error) {
                                 setTimeout(function () {
                                     if (DBConfig.maxReload > (a.indexedDB.length + 1)) location.reload();
                                 }, 700);
-                            });
-                        } else {
-                            console.log("se ha completado la muestra!");
+                            })
                         }
                     })
                 });
 
             } catch (e) {
                 console.log(e);
-                debugger;
             }
         },
 
-        setStorage = function (callback) {
-            storageAPI.set({
-                conductDisjointly: true,
-                recordExpirationData: true,
-                data: [{value: metricas}],
-                storageTypes: ["indexedDB"],
-                options: DBConfig.logOpts,
-                complete: callback
-            });
+        openStorage = function (callback) {
+            var DBOpenRequest = window.indexedDB.open(DBConfig.db, 1);
+            DBOpenRequest.onsuccess = callback;
+            DBOpenRequest.onupgradeneeded = function(event) {
+                var db = event.target.result;
+                db.createObjectStore(DBConfig.table, { keyPath: null, autoIncrement: true });
+            };
         },
 
         getAllStorage = function (callback) {
             storageAPI.getAll({
                 storageTypes: ["indexedDB"],
-                options: DBConfig.logOpts,
+                options: optionsDB,
+                complete: callback
+            });
+        },
+
+        setStorage = function (data, callback) {
+            storageAPI.set({
+                data: [data],
+                storageTypes: ["indexedDB"],
+                options: optionsDB,
                 complete: callback
             });
         },
@@ -77,22 +96,19 @@
         removeAllStorage = function () {
             storageAPI.removeAll({
                 storageTypes: ["indexedDB"],
-                options: DBConfig.logOpts
+                options: optionsDB
             });
         },
 
-        initStorageLog = function (f) {
-            DBConfig.logOpts = {
-                indexedDB: {
-                    databaseName: DBConfig.db,
-                    databaseVersion: 1,
-                    objectStoreData: {
-                        name: DBConfig.table,
-                        autoIncrement: true
-                    }
-                }
+        deleteDB = function (callback) {
+            var req = indexedDB.deleteDatabase(DBConfig.db);
+            req.onsuccess = callback;
+            req.onerror = function () {
+                throw new Error("No se puede eliminar la database");
             };
-            f();
+            req.onblocked = function () {
+                throw new Error("No se puede eliminar la database por estar bloqueada");
+            };
         };
 
     window.addEventListener('message', function (e) {

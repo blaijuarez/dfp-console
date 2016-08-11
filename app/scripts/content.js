@@ -3,7 +3,6 @@
 
     var DFPConsoleObject = null;
     var storageAPI = window["storageAPI"] || {};
-    var DBConfig = window["DBConfig"] || {};
 
     chrome.runtime.onMessage.addListener(function (msg, sender, response) {
 
@@ -117,7 +116,6 @@
 
         for (var i=0,l=output.slotsSort.length;i<l;i++) {
             var key = output.slotsSort[i];
-
             var totalFetch = Math.round(output.slots[key]["gpt-slot_fetch"]),
                 totalRendering = Math.round(output.slots[key]["gpt-slot_rendering"]),
                 totalRendered = Math.round(output.slots[key]["gpt-slot_rendered_load"]),
