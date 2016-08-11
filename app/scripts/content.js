@@ -3,7 +3,6 @@
 
     var DFPConsoleObject = null;
     var storageAPI = window["storageAPI"] || {};
-    var DBConfig = window["DBConfig"] || {};
 
     chrome.runtime.onMessage.addListener(function (msg, sender, response) {
 
