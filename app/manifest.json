@@ -40,6 +40,8 @@
       "all_frames":false,
       "js": ["scripts/content.js"]
     }
-  ]
+  ],
+
+  "devtools_page": "devtools/index.html"
 }
 
