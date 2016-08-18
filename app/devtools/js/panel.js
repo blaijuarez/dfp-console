@@ -35,16 +35,16 @@
                     (!!totalRendered ? '' : ' class="fail"') +
                     '><span><i class="fa fa-fw fa-clock-o"></i> ' +
                     output.slots[key].pos + ' - [ ' + output.slots[key].id + ' ]' +
-                    '</span></a><ul><li><a href="#">';
+                    '</span></a><ul><li><a>';
 
                 if (totalFetch && totalRendering && totalRenderedFake) {
                     template += '<span class="yellow">[ ' +
                         totalFetch + ' ms ]' +
-                        '</span> <span>Recibiendo anuncio</span></a></li><li><a href="#"><span class="yellow">[ ' +
+                        '</span> <span>Recibiendo anuncio</span></a></li><li><a><span class="yellow">[ ' +
                         totalRendering + ' ms ]' +
-                        '</span> <span>Renderizando anuncio</span></a></li><li><a href="#"><span class="yellow">[ ' +
+                        '</span> <span>Renderizando anuncio</span></a></li><li><a><span class="yellow">[ ' +
                         totalRenderedFake + ' ms ]' +
-                        '</span> <span>Renderizado completo</span></a></li><li><a href="#"><span>' +
+                        '</span> <span>Renderizado completo</span></a></li><li><a><span>' +
                         g_load + ' ms' +
                         '<div class="tooltip right"><div class="tooltip-arrow"></div>' +
                         '<div class="tooltip-inner">to load</div></div></span><span>' +
@@ -64,20 +64,11 @@
                 container.innerHTML += template;
             }
 
+            document.getElementById("info-interactive").innerHTML = 'interactive: ' + (interactive / 1000).toFixed(2) + ' s';
+            document.getElementById("info-dcl").innerHTML = 'DOMContentLoad: ' + (load / 1000).toFixed(2) + ' s';
+            document.getElementById("info-load").innerHTML = 'Load: ' + (dcl / 1000).toFixed(2) + ' s';
+
             addHandlers();
-
-
-            window.console.log('\n%cinteractive: ' + (interactive / 1000).toFixed(2) + ' s' +
-                '%c | ' +
-                '%cload: ' + (load / 1000).toFixed(2) + ' s' +
-                '%c | ' +
-                '%cDOMContentLoaded: ' + (dcl / 1000).toFixed(2) + ' s',
-
-                "border: 1px solid rgb(255, 204, 52);background-color: rgb(247, 248, 224);padding:1px 8px;",
-                "border:none; background: #fff; font-weight:bold;color:#ddd",
-                "border: 1px solid rgb(255, 204, 52);background-color: rgb(247, 248, 224);padding:1px 8px;",
-                "border:none; background: #fff; font-weight:bold;color:#ddd",
-                "border: 1px solid rgb(255, 204, 52);background-color: rgb(247, 248, 224);padding:1px 8px;");
         };
 
     port.postMessage({
