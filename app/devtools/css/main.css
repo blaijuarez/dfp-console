@@ -71,8 +71,6 @@ nav.navbar .navbar-btn {
     float: right;
 }
 
-<<<<<<< HEAD
-=======
 #cssmenu ul > li.has-sub:first-child > a {
     -webkit-border-top-left-radius: 5px;
     -webkit-border-top-right-radius: 5px;
@@ -92,7 +90,6 @@ nav.navbar .navbar-btn {
     border-bottom-left-radius: 5px;
 }
 
->>>>>>> develop
 #cssmenu > ul > li > a {
     padding: 12px 22px;
     cursor: pointer;
@@ -156,11 +153,7 @@ nav.navbar .navbar-btn {
 }
 #cssmenu ul ul li a {
     padding: 10px 22px;
-<<<<<<< HEAD
-    cursor: pointer;
-=======
     cursor: default;
->>>>>>> develop
     font-size: 12px;
     text-decoration: none;
     color: #ddd;
