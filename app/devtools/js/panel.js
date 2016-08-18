@@ -33,8 +33,8 @@
                 template = '<li class="has-sub">' +
                     '<a' +
                     (!!totalRendered ? '' : ' class="fail"') +
-                    '><span><i class="fa fa-fw fa-clock-o"></i> ' +
-                    output.slots[key].pos + ' - [ ' + output.slots[key].id + ' ]' +
+                    '><span><i class="fa fa-fw fa-clock-o"></i> <b>' +
+                    output.slots[key].pos + '</b> - [ ' + output.slots[key].id + ' ]' +
                     '</span></a><ul><li><a>';
 
                 if (totalFetch && totalRendering && totalRenderedFake) {
