@@ -1,10 +1,38 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
 <head>
-    <script src="js/panel.js"></script>
+    <title>DFP Console</title>
+    <meta charset="utf-8">
+    <link href="../common/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../common/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 </head>
 <body>
 
-<button id="btn_getConsole">LOAD CONSOLE</button>
+<!--nav class="navbar navbar-static-top navbar-default ng-scope" role="navigation">
+    <div class="container">
+        <div class="collapse navbar-collapse" id="navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="#" target="_blank" id="btn_getConsole">DFP Console ™</a></li>
+            </ul>
+        </div>
+    </div>
+</nav-->
 
+<div class="preview-html">
+    <div class="col-md-12">
+        <div id="cssmenu">
+
+            <button id="btn_getConsole" class="btn-load">Load results</button>
+
+            <ul id="print_dfp_console"></ul>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="../common/js/jquery.min.js"></script>
+<script type="text/javascript" src="../common/js/bootstrap.min.js"></script>
+<script src="js/panel.js"></script>
 </body>
 </html>

@@ -1,0 +1,196 @@
+.nav-tabs>li.active>a,
+.nav-tabs>li.active>a:focus,
+.nav-tabs>li.active>a:hover,
+body {
+    background: url(../../common/img/body_background.jpg) top left
+}
+
+nav.navbar {
+    background: url(../../common/img/header_bg.jpg) top left repeat-x #378065
+}
+nav.navbar .navbar-nav>li>a {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: #fff
+}
+nav.navbar .navbar-nav>li>a:focus,
+nav.navbar .navbar-nav>li>a:hover {
+    background: 0 0
+}
+nav.navbar .navbar-btn {
+    margin-top: 13px;
+    margin-bottom: 13px
+}
+
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,200);
+#cssmenu,
+#cssmenu ul,
+#cssmenu ul li,
+#cssmenu ul li a {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    list-style: none;
+    line-height: 1;
+    display: block;
+    position: relative;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.btn-load {
+    background: url(../../common/img/button_bg.png) top left repeat-x #f1e180;
+    color: #4c4242;
+    text-shadow: 0 1px 1px #fff;
+    border: 0;
+    font-weight: 700;
+    box-shadow: 0 -1px 2px rgba(0,0,0,.3);
+    border-radius: 5px;
+    display: block;
+    padding: 5px 15px;
+    margin: 10px 0;
+}
+
+.btn-load :hover {
+    background: url(../../common/img/button_hover.png) top left repeat-x #f1e180;
+}
+
+#cssmenu {
+    padding: .5% 0;
+    font-family: Raleway, sans-serif;
+    color: #ffffff;
+}
+#cssmenu ul ul {
+    display: none;
+}
+#cssmenu > ul > li.active > ul {
+    display: block;
+}
+.align-right {
+    float: right;
+}
+
+#cssmenu > ul > li > a {
+    padding: 12px 22px;
+    cursor: pointer;
+    font-size: 12px;
+    text-decoration: none;
+    color: #ffffff;
+    background: #39897b;
+    border-bottom: 1px solid #326456;
+    -webkit-transition: color .2s ease;
+    -o-transition: color .2s ease;
+    transition: color .2s ease;
+}
+#cssmenu > ul > li > a.fail {
+    color: #39897b;
+    background: #193b35;
+    border-bottom: 1px solid #275e54;
+}
+
+#cssmenu ul > li.has-sub > a:after {
+    position: absolute;
+    right: 26px;
+    top: 14px;
+    z-index: 5;
+    display: block;
+    height: 10px;
+    width: 2px;
+    background: #ffffff;
+    content: "";
+    -webkit-transition: all 0.1s ease-out;
+    -moz-transition: all 0.1s ease-out;
+    -ms-transition: all 0.1s ease-out;
+    -o-transition: all 0.1s ease-out;
+    transition: all 0.1s ease-out;
+}
+#cssmenu ul > li.has-sub > a:before {
+    position: absolute;
+    right: 22px;
+    top: 18px;
+    display: block;
+    width: 10px;
+    height: 2px;
+    background: #ffffff;
+    content: "";
+    -webkit-transition: all 0.1s ease-out;
+    -moz-transition: all 0.1s ease-out;
+    -ms-transition: all 0.1s ease-out;
+    -o-transition: all 0.1s ease-out;
+    transition: all 0.1s ease-out;
+}
+#cssmenu ul > li.has-sub.open > a:after,
+#cssmenu ul > li.has-sub.open > a:before {
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+#cssmenu ul > li.has-sub.open > a {
+    color: #ffc7c7;
+    background-color: rgb(137, 57, 57);
+}
+#cssmenu ul ul li a {
+    padding: 10px 22px;
+    cursor: pointer;
+    font-size: 12px;
+    text-decoration: none;
+    color: #ddd;
+    background: #49505a;
+    border-bottom: 1px solid #363d48;
+    -webkit-transition: color .2s ease;
+    -o-transition: color .2s ease;
+    transition: color .2s ease;
+}
+#cssmenu ul ul ul li a {
+    padding-left: 32px;
+}
+#cssmenu ul ul li a:hover {
+    color: #fff;
+}
+#cssmenu ul ul > li.has-sub > a:after {
+    top: 16px;
+    right: 26px;
+    background: #ddd;
+}
+#cssmenu ul ul > li.has-sub > a:before {
+    top: 20px;
+    background: #ddd;
+}
+
+.tooltip.right {
+    position: relative;
+    display: inline-block;
+    margin: 0px;
+    opacity: 1;
+}
+
+.tooltip.right .tooltip-arrow {
+    border-right-color: #3ab4a6;
+}
+
+.tooltip-inner {
+    font-size: 11px;
+    background-color: #3ab4a6;
+    color: #252a31;
+    font-weight: bold;
+}
+
+#cssmenu ul ul > li:last-child a {
+    background: #363d48;
+    color: #3ab4a6;
+}
+
+#cssmenu ul ul > li:last-child a span {
+    margin: 0 10px 0 0;
+}
+
+.tooltip.right .tooltip-arrow {
+    border-width: 5px 6px 5px 0;
+}
+
+.yellow {
+    color: #d8d819;
+}

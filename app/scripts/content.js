@@ -9,9 +9,11 @@
         if (message.from === 'devtools') {
             switch (message.subject) {
                 case "getDFPConsoleObject":
-                    chrome.extension.sendMessage(DFPConsoleObject);
+                    sendConsoleObject(DFPConsoleObject);
                     break;
             }
+
+            //response && response();
         }
 
         if (message.from === 'popup') {
@@ -96,6 +98,7 @@
 
         q.then(function(response) {
             DFPConsoleObject = response;
+            sendConsoleObject(DFPConsoleObject);
         });
     });
 
@@ -123,6 +126,10 @@
         },5000);
     };
 
+    var sendConsoleObject = function(data) {
+        chrome.extension.sendMessage(data);
+    };
+
     var DFPLogMode = function () {
         //chrome.runtime.sendMessage({action: "removeUserBrowserData"}, null);
         (function injector(libs) {
@@ -134,9 +141,17 @@
     };
 
     window.onload = function () {
+        tradeMark();
         DFPForceConsole();
         var logMode = window.localStorage.getItem("dfp_log_mode");
         logMode && logMode !== "false" && DFPLogMode();
+    };
+
+    var tradeMark = function() {
+        window.console.log("\n%cDFP Console %c™\n%c by OSP Team\n\n",
+            "font-family: Impact, serif; font-size: 32px; color: #005689",
+            "font-family: Impact, serif; font-size: 16px; color: #005689",
+            "font-family: Helvetica Neue, sans-serif; font-size: 11px; text-decoration: underline; line-height: 1.2rem; color: #767676");
     };
 
 }());
