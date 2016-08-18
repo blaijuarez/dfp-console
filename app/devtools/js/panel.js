@@ -64,20 +64,11 @@
                 container.innerHTML += template;
             }
 
+            document.getElementById("info-interactive").innerHTML = 'interactive: ' + (interactive / 1000).toFixed(2) + ' s';
+            document.getElementById("info-dcl").innerHTML = 'DOMContentLoad: ' + (load / 1000).toFixed(2) + ' s';
+            document.getElementById("info-load").innerHTML = 'Load: ' + (dcl / 1000).toFixed(2) + ' s';
+
             addHandlers();
-
-
-            window.console.log('\n%cinteractive: ' + (interactive / 1000).toFixed(2) + ' s' +
-                '%c | ' +
-                '%cload: ' + (load / 1000).toFixed(2) + ' s' +
-                '%c | ' +
-                '%cDOMContentLoaded: ' + (dcl / 1000).toFixed(2) + ' s',
-
-                "border: 1px solid rgb(255, 204, 52);background-color: rgb(247, 248, 224);padding:1px 8px;",
-                "border:none; background: #fff; font-weight:bold;color:#ddd",
-                "border: 1px solid rgb(255, 204, 52);background-color: rgb(247, 248, 224);padding:1px 8px;",
-                "border:none; background: #fff; font-weight:bold;color:#ddd",
-                "border: 1px solid rgb(255, 204, 52);background-color: rgb(247, 248, 224);padding:1px 8px;");
         };
 
     port.postMessage({
