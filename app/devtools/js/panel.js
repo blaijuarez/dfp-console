@@ -35,16 +35,16 @@
                     (!!totalRendered ? '' : ' class="fail"') +
                     '><span><i class="fa fa-fw fa-clock-o"></i> ' +
                     output.slots[key].pos + ' - [ ' + output.slots[key].id + ' ]' +
-                    '</span></a><ul><li><a href="#">';
+                    '</span></a><ul><li><a>';
 
                 if (totalFetch && totalRendering && totalRenderedFake) {
                     template += '<span class="yellow">[ ' +
                         totalFetch + ' ms ]' +
-                        '</span> <span>Recibiendo anuncio</span></a></li><li><a href="#"><span class="yellow">[ ' +
+                        '</span> <span>Recibiendo anuncio</span></a></li><li><a><span class="yellow">[ ' +
                         totalRendering + ' ms ]' +
-                        '</span> <span>Renderizando anuncio</span></a></li><li><a href="#"><span class="yellow">[ ' +
+                        '</span> <span>Renderizando anuncio</span></a></li><li><a><span class="yellow">[ ' +
                         totalRenderedFake + ' ms ]' +
-                        '</span> <span>Renderizado completo</span></a></li><li><a href="#"><span>' +
+                        '</span> <span>Renderizado completo</span></a></li><li><a><span>' +
                         g_load + ' ms' +
                         '<div class="tooltip right"><div class="tooltip-arrow"></div>' +
                         '<div class="tooltip-inner">to load</div></div></span><span>' +
