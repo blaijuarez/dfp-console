@@ -1,11 +1,8 @@
-### Yeoman template
+### APP
 node_modules/
-bower_components/
-*.log
-
-build/
+tmp/
 dist/
-
 ### IDE template
-# IntelliJ project files
 .idea/
+### Wiki
+gfx/

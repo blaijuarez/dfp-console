@@ -1,0 +1,16 @@
+{
+  "name": "DFPConsole",
+  "version": "0.4.1",
+  "description": "",
+  "main": "gulpfile.js",
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-uglify": "^2.0.0",
+    "gulp-zip": "^3.2.0",
+    "gulp-if": "^2.0.1",
+    "yargs": "^5.0.0",
+    "del": "^2.2.2"
+  }
+}
