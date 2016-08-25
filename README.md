@@ -11,14 +11,13 @@ Features:
 - Exports data!
 
 ![Screenshot](https://github.com/blaijuarez/dfp-console/blob/master/gfx/screenshots/1.png?raw=true)
-![Screenshot](https://github.com/blaijuarez/dfp-console/blob/master/gfx/screenshots/2.png?raw=true)
 ![Screenshot](https://github.com/blaijuarez/dfp-console/blob/master/gfx/screenshots/3.png?raw=true)
 ![Screenshot](https://github.com/blaijuarez/dfp-console/blob/master/gfx/screenshots/4.png?raw=true)
 
 Installation
 ------------
 
-###### If you are a developer:
+##### If you are a developer:
 
 Clone the repository on your local machine:
 
@@ -34,7 +33,7 @@ Generate the installer using the command:
 
 That's it!
 
-###### If you're not a developer:
+##### If you're not a developer:
 
 This is the compressed file containing all necessary for proper operation code.
 [Download the extension](https://github.com/blaijuarez/dfp-console/blob/master/gfx/dfp-console.crx).
@@ -43,10 +42,10 @@ This is the compressed file containing all necessary for proper operation code.
 Usage
 ------------
 
-###### Sample results in devtool:
+##### Sample results in devtool:
 Access a website that has configured DFP. Open devtool panel (F12) and click on the `DFP Console` tab. Click the button to see the results.
 
-###### Change settings DFP:
+##### Change settings DFP:
 If you click on the icon (top right), the configuration panel will be displayed. In this section you can change the settings and behaviors of advertising DFP. By default is disabled. Click on the red button to activate. The options are:
 
 + Toggle the disableInitialLoad mode.
@@ -55,10 +54,10 @@ If you click on the icon (top right), the configuration panel will be displayed.
 
 If you have enabled disableInitialLoad, you can force the fetch clicking on the `ads Refresh` button.
 
-###### See the results on the timeline:
+##### See the results on the timeline:
 You can see a graph of the time it takes the activities since the first resource is requested, until the last item is rendered by clicking on the button `stats`.
 
-###### Export samples:
+##### Export samples:
 To activate the report mode, click on the icon file.
 Enter the number of samples you want and press the `go` button! Once finished, you can export the data to a .csv file.
 
