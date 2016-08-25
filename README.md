@@ -11,7 +11,7 @@ Features:
 - Exports data!
 
 ![Screenshot](https://github.com/blaijuarez/dfp-console/blob/master/gfx/screenshots/1.png?raw=true)
-![Screenshot](https://github.com/blaijuarez/dfp-console/blob/master/gfx/screenshots/3.png?raw=true)
+![Screenshot](https://github.com/blaijuarez/dfp-console/blob/master/gfx/screenshots/2.png?raw=true)
 ![Screenshot](https://github.com/blaijuarez/dfp-console/blob/master/gfx/screenshots/4.png?raw=true)
 
 Installation
