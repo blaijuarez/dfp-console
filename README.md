@@ -1,8 +1,8 @@
 dfp-console
 ======================
-Console DFP born with the need to measure the times of advertising campaigns set to real-time rendering browser.
+DFP Console born with the need to measure the times of advertising campaigns set to real-time rendering browser.
 
-DFPConsole is an extension for Google Chrome browser. With it you can measure the time from the first resource request, until the end of its rendering. With the possibility to see the data in a timeline graph, create reports or export a csv file.
+DFP Console is an extension for Google Chrome browser. With it you can measure the time from the first resource request, until the end of its rendering. With the possibility to see the data in a timeline graph, create reports or export a csv file.
 
 Features:
 - Get a complete listing of all slots subscribed to DFP.
@@ -11,6 +11,9 @@ Features:
 - Exports data!
 
 ![Screenshot](https://github.com/blaijuarez/dfp-console/blob/master/gfx/screenshots/1.png?raw=true)
+![Screenshot](https://github.com/blaijuarez/dfp-console/blob/master/gfx/screenshots/2.png?raw=true)
+![Screenshot](https://github.com/blaijuarez/dfp-console/blob/master/gfx/screenshots/3.png?raw=true)
+![Screenshot](https://github.com/blaijuarez/dfp-console/blob/master/gfx/screenshots/4.png?raw=true)
 
 Installation
 ------------
@@ -34,7 +37,7 @@ That's it!
 ###### If you're not a developer:
 
 This is the compressed file containing all necessary for proper operation code.
-[Download the extension](https://github.com/blaijuarez/dfp-console/blob/master/gfx/dfp-console.zip).
+[Download the extension](https://github.com/blaijuarez/dfp-console/blob/master/gfx/dfp-console.crx).
 
 
 Usage

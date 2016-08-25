@@ -5,4 +5,4 @@ dist/
 ### IDE template
 .idea/
 ### Wiki
-gfx/
+#gfx/
