@@ -34,7 +34,7 @@ That's it!
 ###### If you're not a developer:
 
 This is the compressed file containing all necessary for proper operation code.
-[Download the extension](https://github.com/blaijuarez/dfp-console/blob/master/gfx/dfp-console.zip).
+[Download the extension](https://github.com/blaijuarez/dfp-console/blob/master/gfx/dfp-extension.zip).
 
 
 Usage
