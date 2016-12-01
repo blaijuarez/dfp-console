@@ -3,8 +3,8 @@
     "file": "http://partner.googleadservices.com/gpt/pubads_impl_105.js",
     "fileOut": "app/scripts/pubads.js",
     "match": [
-      { "regExp" :"\"complete\"===document.readyState",
-        "value": "\"complete\"===document.readyState"
+      { "regExp" :"(\"complete\"===document.readyState)",
+        "value": "$1"
       },
       { "regExp": "(.prototype.push=function\\(\\w\\)\\{[\\s\\S]*?try\\{)",
         "value": "$1DFPConsoleInit();"
