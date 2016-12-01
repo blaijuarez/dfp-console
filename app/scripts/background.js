@@ -24,13 +24,13 @@
 
     chrome.webRequest.onBeforeRequest.addListener(
         function (response) {
-            if (/^.+(gpt\/pubads_impl.+)\.js$/.test(response.url)) {
+            if (/.+(gpt\/pubads_impl.+)\.js/.test(response.url)) {
                 var redirect = {};
-                redirect.redirectUrl =  chrome.extension.getURL('scripts/pubads_impl_90.js');
+                redirect.redirectUrl =  chrome.extension.getURL('scripts/pubads.js');
                 return redirect;
             }
         },
-        {urls: ["*://*.googleadservices.com/*"], types: ["script"]},
+        {urls: ["*://partner.googleadservices.com/gpt/*", "*://securepubads.g.doubleclick.net/gpt/*"], types: ["script"]},
         ["blocking"]);
 
 

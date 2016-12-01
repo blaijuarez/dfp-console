@@ -5,4 +5,6 @@ dist/
 ### IDE template
 .idea/
 ### Wiki
-gfx/
+gfx
+### pubads_impl_[\d].js
+app/scripts/pubads.js

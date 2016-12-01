@@ -1,0 +1,23 @@
+{
+  "pubads": {
+    "file": "http://partner.googleadservices.com/gpt/pubads_impl_105.js",
+    "fileOut": "app/scripts/pubads.js",
+    "match": [
+      { "regExp" :"\"complete\"===document.readyState",
+        "value": "\"complete\"===document.readyState"
+      },
+      { "regExp": ".prototype.push=function\\((\\w)\\)\\{[\\s\\S]*?try\\{",
+        "value": ".prototype.push=function($1){try{DFPConsoleInit();"
+      },
+      { "regExp": "(w{1}).google_onload_fired=!0",
+        "value": "DFPConsoleLog();$1.google_onload_fired=!0"
+      },
+      { "regExp": "[\\w]{2}(=[\\w]{1}\\()[\\d]{2,3}(\\))",
+        "value": "L4rA$1510$2"
+      },
+      { "regExp": "(b\\.[\\w]{1,2}&&b\\.[\\w]+\\(\\)\\}\\);b\\.[\\w]{1,2}=!0;)",
+        "value": "b.L4rA=b.j.info(L4rA(b.getAdUnitPath()),null,b); $1"
+      }]
+  },
+  "extensionName": "dfp-extension"
+}
