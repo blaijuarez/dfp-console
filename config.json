@@ -6,11 +6,11 @@
       { "regExp" :"\"complete\"===document.readyState",
         "value": "\"complete\"===document.readyState"
       },
-      { "regExp": ".prototype.push=function\\((\\w)\\)\\{[\\s\\S]*?try\\{",
-        "value": ".prototype.push=function($1){try{DFPConsoleInit();"
+      { "regExp": "(.prototype.push=function\\(\\w\\)\\{[\\s\\S]*?try\\{)",
+        "value": "$1DFPConsoleInit();"
       },
-      { "regExp": "(w{1}).google_onload_fired=!0",
-        "value": "DFPConsoleLog();$1.google_onload_fired=!0"
+      { "regExp": "(\\w{1}.google_onload_fired=!0)",
+        "value": "DFPConsoleLog();$1"
       },
       { "regExp": "[\\w]{2}(=[\\w]{1}\\()[\\d]{2,3}(\\))",
         "value": "L4rA$1510$2"
